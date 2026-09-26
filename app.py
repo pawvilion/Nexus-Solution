@@ -50,7 +50,7 @@ with st.form("nueva_tarea", clear_on_submit=True):
 
 if st.session_state.tareas:
     st.subheader("Tareas")
-    st.dataframe([t.to_dict() for t in st.session_state.tareas], use_container_width=True)
+    st.dataframe([t.to_dict() for t in st.session_state.tareas], width="stretch")
     if st.button("Borrar todas"):
         st.session_state.tareas = []
         st.rerun()

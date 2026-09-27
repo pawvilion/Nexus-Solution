@@ -1,0 +1,60 @@
+# Contexto del cliente: Terapias Dalmeet
+
+Resumen del diagnóstico de la hackatón (zip USACH, entrevistas y reunión 1), con las correcciones y decisiones del equipo. Si algo de aquí contradice los documentos originales, **manda este archivo**.
+
+## Para quién es
+
+**Bárbara Galdames**, dueña de Terapias Dalmeet: terapeuta holística transpersonal, con formación en psicología y 15 años de experiencia en Brasil. Trabaja sola en Puente Alto (Santiago).
+
+- **Servicios:** masajes, reiki, reflexología, aromaterapia y flores de Bach. Sesiones de 45 a 90 minutos, entre $10.000 y $25.000, en su casa o a domicilio.
+- **Productos:** guateros terapéuticos de semillas (su producto estrella: para frío o calor, para uso propio o para regalar, de mejor calidad que uno genérico) y sales de baño.
+- **Clientas:** 2 o 3 por semana (algunas semanas ninguna). El 70 % son mujeres de 30 a 55 años. Son fieles y vuelven unas 2 veces al mes.
+- **Canales:** Instagram, Facebook Marketplace, WhatsApp y ferias.
+- **Equipo técnico:** notebook básico y celular, así que la app debe ser liviana.
+- **IA:** paga ChatGPT y lo usa como compañía para conversar (le puso "ayam"). Tiene un presupuesto pequeño pero real. Ojo: la suscripción a ChatGPT **no incluye la API**, que se paga aparte.
+
+Su visión, sus creencias y sus sueños están en [nexus/esencia.md](../nexus/esencia.md), que es el texto que usa la IA.
+
+## El problema que elegimos: poco alcance
+
+Bárbara tiene pocas clientas, sobre todo de terapias. Creemos que la causa es el **poco alcance y difusión**.
+
+Tiene una visión clara y una pasión real (por ejemplo, cree que el cariño que pone en cada producto trasciende a quien lo usa), pero **eso no se convierte en contenido, productos ni servicios** que lleguen a más gente. Publica de forma irregular porque tiene que decidir en el momento qué subir mientras atiende y fabrica.
+
+Lo que sí le ha funcionado es lo cercano: el boca a boca y **una feria en su villa** con la junta de vecinos y terapias express, que le dejó clientas constantes.
+
+## Nuestro diferenciador: cercanía
+
+Son 30 equipos. Muchos harán productos muy pulidos técnicamente, y hay otro equipo (de contabilidad) trabajando con Bárbara en costos y finanzas. **No competimos en eso.**
+
+Nuestra apuesta es la **cercanía con la emprendedora**: quien empieza vende poco, pero tiene un sueño, y le falta alguien que la ayude a aterrizarlo. Nexus es esa compañera: escucha la idea como Bárbara la cuente y la devuelve convertida en algo concreto, con su voz.
+
+Esto se nota en la app:
+- Es una **conversación**, no un formulario, porque a Bárbara le gusta conversar con la IA.
+- Nexus **cree en su sueño**: reconoce lo valioso de su idea y la aterriza, sin halagos vacíos.
+- Todo lo que genera **suena a Bárbara**, porque parte de su esencia.
+
+## Qué construimos
+
+| Módulo | Qué entra | Qué sale |
+|--------|-----------|----------|
+| ✍️ **Guion para redes** | Una idea, anécdota o creencia | Guion de reel o carrusel, texto del post, idea visual, día y hora para publicar |
+| 🌱 **Laboratorio de experiencias** | Una inspiración ("quiero que sientan el cariño del guatero") | Una experiencia o servicio concreto: nombre, pasos, formato, por qué es valiosa y post de lanzamiento |
+| 🤝 **Difusión fuera de redes** | A quién quiere llegar (junta de vecinos, feria, empresa, municipalidad, otra ciudad) | Qué ofrecer, mensaje listo para enviar y próximos pasos |
+
+La app no publica ni envía nada sola: prepara todo listo y Bárbara decide. **Fuera de alcance:** costos, precios y contabilidad (los trabaja el otro equipo); publicación automática; cuentas de usuario (quedan como próximo paso).
+
+## Reglas que no se pueden romper
+
+- **Nada de promesas de cura ni de tratar condiciones** (por ejemplo, TDAH, ansiedad o dolor crónico). Se habla de bienestar, relajación y acompañamiento.
+- **No usar la palabra "diagnóstico"** ni presentar su formación en psicología como atención clínica. Para la experiencia del guatero se dice "conversación inicial" o "escucha".
+- **Inspirar y educar primero, vender después.**
+- No inventar precios, testimonios ni cifras: se marcan como `[a completar por Bárbara]`.
+- Nunca subir al repo datos personales, como los PDF de las entrevistas (incluyen su teléfono).
+
+## Pendiente de confirmar con Bárbara
+
+- [ ] Que el tono de [nexus/esencia.md](../nexus/esencia.md) la represente (lo ideal es que lo lea ella).
+- [ ] Qué terapias quiere destacar primero.
+- [ ] Si le interesa lanzar "Crea tu guatero conmigo" y otra feria como la de su villa.
+- [ ] Estadísticas actuales de Instagram (alcance, seguidores, visitas al perfil) para la línea base.

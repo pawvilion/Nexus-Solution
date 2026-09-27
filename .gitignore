@@ -18,3 +18,12 @@ dist/
 
 # Datos privados (contraseñas, claves)
 .env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Streamlit: aquí va la API key, NUNCA se sube
+.streamlit/secrets.toml

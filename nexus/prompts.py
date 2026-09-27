@@ -113,7 +113,7 @@ Esto es lo que sabes de Bárbara y su emprendimiento:
 
 {esencia}
 
-## Lo que Bárbara te ha ido contando (tu memoria)
+## Lo que Bárbara te ha ido contando (tu memoria, escrita hablándole a ella)
 Úsalo para que todo se parezca cada vez más a ella. Si contradice lo anterior, manda lo más reciente.
 
 {memoria}
@@ -135,7 +135,7 @@ Reglas:
 - Cada acción usa uno de estos módulos: {modos}.
 - "titulo" es corto (máximo 10 palabras) y dice qué van a lograr juntas.
 - "mensaje" es lo que Bárbara le diría a Nexus en ese módulo para empezar, en primera persona.
-  Para "estadisticas" usa null, porque ella tiene que subir sus capturas.
+  Para "estadisticas" y "conversemos" usa null: ahí ella sube sus capturas o escribe con sus propias palabras.
 - Varía los módulos y prioriza lo que más le sirva hoy según su situación.
 - Nunca prometas curas ni hables de diagnósticos.
 
@@ -152,18 +152,21 @@ Su situación hoy:
 {contexto}"""
 
 
-EXTRAER_RECUERDOS = """Eres la memoria de Nexus, la compañera de Bárbara (Terapias Dalmeet).
-Lee el texto y extrae SOLO lo que vale la pena recordar a largo plazo y que no esté ya en la memoria:
-- "esencia": creencias, valores, sueños, metas, historias, anécdotas, gustos o formas de hablar de Bárbara,
-  y datos de su negocio (servicios, productos, clientas en general, lugares, alianzas).
-- "redes": aprendizajes sobre qué funciona o no en sus publicaciones (formatos, temas, horarios, cifras).
+ACTUALIZAR_MEMORIA = """Eres la memoria de Nexus, la compañera de Bárbara (Terapias Dalmeet).
+Guardas lo que Bárbara cuenta en textos consolidados por tema, escritos hablándole a ella de tú
+(ej.: "Sueñas con hacer giras de terapia por otras ciudades…").
 
-Reglas:
-- Cada recuerdo es una frase corta en tercera persona (ej.: "Sueña con hacer giras de terapia por otras ciudades").
+Temas:
+{temas}
+
+Lee el texto nuevo y decide qué temas cambian. Para cada tema que cambie, devuelve su texto COMPLETO actualizado:
+- Integra lo nuevo con lo que ya estaba, sin perder información anterior (salvo que lo nuevo la contradiga).
+- Escribe un párrafo corrido, cálido y claro, de máximo 120 palabras. Si se alarga, resume sin perder lo esencial.
+- Solo cosas que valga la pena recordar a largo plazo: nada de saludos, preguntas ni cosas pasajeras.
 - No guardes datos de salud ni nombres de clientas u otras personas.
-- No guardes saludos, preguntas ni cosas pasajeras. Si no hay nada nuevo, devuelve listas vacías.
+- Si un tema no cambia, no lo incluyas. Si no hay nada nuevo, devuelve {{}}.
 
-Responde SOLO con JSON: {{"esencia": ["..."], "redes": ["..."]}}
+Responde SOLO con JSON, usando las claves de los temas. Ej.: {{"suenos": "texto completo actualizado"}}
 
-Memoria actual:
+Textos actuales por tema:
 {memoria}"""

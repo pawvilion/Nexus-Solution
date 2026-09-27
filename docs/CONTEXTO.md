@@ -45,7 +45,7 @@ Esto se nota en la app:
 
 | 📊 **Mis estadísticas** | Capturas de pantalla de las estadísticas de Instagram | Qué funciona, qué no y 3 cosas para probar esta semana |
 
-**Memoria:** de lo que Bárbara cuenta y de lo que muestran sus estadísticas, Nexus extrae lo importante y lo guarda (`nexus/memoria.py`). Todos los módulos lo usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Nexus sabe de ti" le muestra lo guardado y le permite borrar cualquier recuerdo. No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
+**Memoria:** lo que Bárbara cuenta y lo que muestran sus estadísticas se guarda en 5 **consolidados por tema** (sueños y metas, creencias, historia, trabajo y clientas, redes), escritos hablándole a ella (`nexus/memoria.py`). Con cada mensaje, la IA reescribe solo los temas donde hay algo nuevo, integrándolo sin perder lo anterior. Todos los módulos los usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Nexus sabe de ti" muestra cada tema con su comienzo; al tocarlo se abre una ventana donde puede leerlo entero, corregirlo u olvidarlo (con confirmación). No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
 
 **Inicio proactivo ("Tu día con Nexus"):** al abrir la app, Nexus no espera a que Bárbara escriba. La saluda con algo concreto que sabe de ella, le dice cómo va con sus publicaciones (las registra con el botón "📣 Lo publiqué") y le propone 3 acciones para hoy, cada una con un botón que empieza la conversación en el módulo correcto. Es lo que la diferencia de un chat genérico: **toma la iniciativa, como una compañera**.
 

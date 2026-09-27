@@ -79,19 +79,29 @@ def generar_inicio(
     return {"saludo": datos["saludo"], "acciones": acciones}
 
 
-def extraer_recuerdos(
-    texto: str, memoria: str, api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None
+def actualizar_memoria(
+    texto: str,
+    memoria_json: str,
+    temas: dict,
+    api_key: str,
+    modelo: str = MODELO_POR_DEFECTO,
+    base_url: str | None = None,
 ) -> dict:
-    """Devuelve lo nuevo que vale la pena recordar: {"esencia": [...], "redes": [...]}."""
+    """Devuelve solo los temas que cambian, con su texto completo actualizado: {tema: texto}.
+
+    memoria_json: textos actuales por tema (ver memoria.como_json).
+    temas: {clave: (emoji, título, descripción)} (ver memoria.TEMAS).
+    """
+    lista_temas = "\n".join(f'- "{clave}": {descripcion}' for clave, (_, _, descripcion) in temas.items())
     cliente = OpenAI(api_key=api_key, base_url=base_url)
     respuesta = cliente.chat.completions.create(
         model=modelo,
         temperature=0,
         response_format={"type": "json_object"},
         messages=[
-            {"role": "system", "content": prompts.EXTRAER_RECUERDOS.format(memoria=memoria)},
+            {"role": "system", "content": prompts.ACTUALIZAR_MEMORIA.format(temas=lista_temas, memoria=memoria_json)},
             {"role": "user", "content": texto},
         ],
     )
     datos = _leer_json(respuesta.choices[0].message.content)
-    return {"esencia": datos.get("esencia", []), "redes": datos.get("redes", [])}
+    return {tema: texto for tema, texto in datos.items() if tema in temas and isinstance(texto, str)}

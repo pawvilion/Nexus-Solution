@@ -27,3 +27,6 @@ venv/
 
 # Streamlit: aquí va la API key, NUNCA se sube
 .streamlit/secrets.toml
+
+# Memoria de Nexus (lo que cuenta Bárbara): no se sube a GitHub
+data/

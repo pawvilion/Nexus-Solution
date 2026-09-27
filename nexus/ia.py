@@ -165,3 +165,49 @@ def sugerir_afiche(origen: str, memoria: str, api_key: str, modelo: str = MODELO
     )
     datos = _leer_json(respuesta.choices[0].message.content)
     return {clave: str(datos.get(clave, "")).strip() for clave in ("titulo", "subtitulo", "detalle")}
+
+
+def planificar_marketing(espacios: str, memoria: str, api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None) -> list[dict]:
+    """Plan de Instagram de la semana: un post por día de publicar y 2 historias, con las fotos que necesita."""
+    respuesta = _completar(
+        api_key,
+        base_url,
+        modelo,
+        temperature=0.8,
+        response_format={"type": "json_object"},
+        messages=[{"role": "user", "content": prompts.PLAN_MARKETING.format(espacios=espacios, esencia=prompts.ESENCIA, memoria=memoria)}],
+    )
+    piezas = _leer_json(respuesta.choices[0].message.content).get("piezas", [])
+    if not piezas:
+        raise ValueError("La IA no devolvió un plan")
+    return piezas
+
+
+def preparar_publicacion(
+    pieza: dict, imagenes: list[tuple[bytes, str]], videos: list[str], memoria: str,
+    api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None,
+) -> dict:
+    """Mira las fotos de Bárbara, elige las mejores y escribe la descripción: {"orden", "texto_imagen", "descripcion", "consejo"}."""
+    instrucciones = prompts.PREPARAR_PUBLICACION.format(
+        tipo=pieza["tipo"], formato=pieza["formato"], tema=pieza["tema"], objetivo=pieza["objetivo"],
+        videos=", ".join(videos) or "ninguno", esencia=prompts.ESENCIA, memoria=memoria,
+    )
+    respuesta = _completar(
+        api_key,
+        base_url,
+        modelo,
+        temperature=0.7,
+        response_format={"type": "json_object"},
+        messages=[
+            {"role": "system", "content": instrucciones},
+            {"role": "user", "content": _con_imagenes(f"Mis fotos para: {pieza['tema']}", imagenes) if imagenes else f"Solo subí videos para: {pieza['tema']}"},
+        ],
+    )
+    datos = _leer_json(respuesta.choices[0].message.content)
+    orden = [i for i in datos.get("orden", []) if isinstance(i, int) and 0 <= i < len(imagenes)]
+    return {
+        "orden": orden or None,
+        "texto_imagen": str(datos.get("texto_imagen", "")).strip(),
+        "descripcion": str(datos.get("descripcion", "")).strip(),
+        "consejo": str(datos.get("consejo", "")).strip(),
+    }

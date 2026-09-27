@@ -25,6 +25,7 @@ else:
     st.navigation(
         [
             st.Page("vistas/nexus.py", title="Bárbara.IA", icon="🌿", default=True),
+            st.Page("vistas/marketing.py", title="Centro de marketing", icon="📸", url_path="marketing"),
             st.Page("vistas/kit.py", title="Kit de difusión", icon="📣", url_path="kit"),
             st.Page("vistas/alcance.py", title="Tu alcance", icon="📈", url_path="alcance"),
         ],

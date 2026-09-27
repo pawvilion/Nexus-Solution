@@ -56,7 +56,26 @@ Además, confirma siempre que:
 
 Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo o **olvídalo**. Bárbara.IA no guarda datos de salud ni nombres de clientas.
 
-## 7. Las otras páginas (menú de arriba)
+## 7. Mi semana (barra lateral, siempre a la vista)
+
+Muestra qué te toca **hoy** y el resto de la semana: 📣 publicar, ✍️ preparar contenido, 💆 terapias, 🧵 fabricar productos, 🛒 comprar insumos, 🤝 difusión y 🌿 descanso. En el celular, lo de hoy también aparece arriba del chat; la semana completa está en el menú **»** de arriba a la izquierda.
+
+**¿Algo no te acomoda?** Toca **✏️ Editar mi semana**: cambia el día, la hora o la actividad, agrega filas al final o borra las que sobren, y toca **Guardar mi semana**. Si te enredas, **Volver a la propuesta inicial**.
+
+## 8. 📸 Centro de marketing (menú de arriba)
+
+Tú solo sacas las fotos que te pido; yo las edito y escribo la descripción.
+
+1. Toca **Armar mi plan de la semana**. Sale un post por cada día de 📣 Publicar de tu semana, más 2 historias.
+2. En cada publicación verás **"Lo que necesito que me mandes"**: saca esas fotos o videos con el celular.
+3. Súbelos **tal cual, sin editar**, y toca **🪄 Preparar mi publicación**.
+4. Revisa la foto editada y la descripción. Puedes cambiar el texto sobre la imagen (**Aplicar texto**) o la descripción.
+5. Toca **✅ Aprobar**. Si la revisión marca algo en rojo, no te dejará aprobar hasta que lo cambies.
+6. Descarga las fotos y **prográmala** en Meta Business Suite o en Instagram para el día y la hora del plan (los pasos están en "Cómo programarla"). Luego toca **Ya la programé**.
+
+Los videos van tal cual: recórtalos en el editor de Instagram al publicarlos.
+
+## 9. Las otras páginas (menú de arriba)
 
 - **📣 Kit de difusión:** tu tarjeta digital (link para la bio de Instagram) y afiches con QR para ferias o juntas de vecinos. Cada QR te dice de dónde llegó la persona.
 - **📈 Tu alcance:** los números de tus publicaciones, sacados de las capturas que subes, con un gráfico.

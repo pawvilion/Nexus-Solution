@@ -23,11 +23,11 @@ Además de la conversación, la app tiene dos páginas más (menú de arriba):
 | Página | Qué hace |
 |--------|----------|
 | Calendario | La semana de Bárbara ordenada por día: cuándo publicar, preparar contenido, atender, fabricar y comprar insumos. Se edita en una tabla y el Centro de marketing usa sus días de publicar |
-| 📸 Centro de marketing | Plan de Instagram de la semana según sus días de publicar: pide las fotos, las edita (formato, luz, texto), escribe la descripción y, tras su aprobación, deja el paquete listo para programar |
+| ⚙️ Marketing Executor | **El ciclo de marketing** (idea y lógica de Benjamín): Bárbara.IA analiza su situación y crea una campaña de 2 semanas → el Executor la valida y organiza → Bárbara aprueba, pide cambios (la IA reescribe y vuelve a revisión) o rechaza → lo aprobado se ejecuta → anota resultados (alcance, consultas, nuevas clientas) → el reporte vuelve a Bárbara.IA, que crea el siguiente plan |
 | 📣 Kit de difusión | **Tarjeta digital** de Terapias Dalmeet (link para la bio de Instagram) y **afiches con QR** para ferias, juntas de vecinos o el CESFAM. Cada QR dice de dónde llegó la persona |
 | 📈 Tu alcance | Los números de sus publicaciones (sacados de las capturas que sube), un gráfico y qué formato le funciona mejor. **Embudo de clientas** (me escribió → agendó o compró → volvió, según de dónde llegó) y un **reporte** que la IA usa para el siguiente plan |
 
-**El ciclo completo:** Bárbara.IA propone (chat y Centro de marketing) → Bárbara aprueba → publica y difunde (Kit) → mide (Tu alcance) → los resultados vuelven solos a la IA para el siguiente plan. El embudo y el reporte vienen del *Marketing Executor* de Benjamín, integrado aquí para no tener dos apps; su versión original está en el historial de Git (commit `5ba7a45`).
+**El ciclo completo:** Bárbara.IA propone → el Marketing Executor organiza → Bárbara aprueba → publica y difunde (Kit) → mide (Executor y Tu alcance) → el reporte vuelve a la IA para el siguiente plan. El Centro de marketing de Sofía (fotos editadas y descripción) quedó oculto en el menú porque el equipo eligió el Executor; su código sigue en `vistas/marketing.py`.
 
 La tarjeta pública se abre con `?p=tarjeta` (ej. https://nexus-dalmeet.streamlit.app/?p=tarjeta) y no muestra nada de Bárbara.IA.
 
@@ -64,7 +64,9 @@ nexus/inicio.py      ← "Tu día con Bárbara.IA": saludo y acciones del día (
 nexus/memoria.py     ← guarda y lee lo que Bárbara.IA recuerda (data/memoria.json, fuera de GitHub)
 nexus/actividad.py   ← registra cuándo publica (data/actividad.json, fuera de GitHub)
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
-vistas/marketing.py  ← Centro de marketing: plan de la semana, subir fotos, revisar, aprobar y programar
+vistas/executor.py   ← Marketing Executor: plan, aprobar, agenda, resultados y reporte (usa dalmeet_executor/)
+dalmeet_executor/    ← paquete de Benjamín: base de datos (SQLite o PostgreSQL), validación del plan, reglas de ejecución y reporte
+vistas/marketing.py  ← Centro de marketing de Sofía (oculto): plan de la semana, subir fotos, revisar, aprobar y programar
 nexus/marketing.py   ← plan de Instagram, edición de fotos (Pillow) y paquete para programar (data/marketing.json, data/medios/)
 vistas/calendario.py ← Calendario: la semana en 7 columnas y la tabla para editarla
 nexus/semana.py      ← datos del calendario y propuesta inicial (data/semana.json)

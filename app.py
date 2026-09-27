@@ -32,9 +32,10 @@ else:
     st.set_page_config(page_title="Bárbara.IA · Terapias Dalmeet", page_icon="🌿", layout="centered")
     paginas = [
         st.Page("vistas/nexus.py", title="Bárbara.IA", icon="🌿", default=True),
-        # Plan, aprobación y programación de publicaciones. Integra lo mejor del Marketing Executor de Benjamín
-        # (el embudo y el reporte quedaron en "Tu alcance"; el código original está en el historial, commit 5ba7a45).
-        st.Page("vistas/marketing.py", title="Centro de marketing", icon="📸", url_path="marketing"),
+        # Ciclo de marketing de Benjamín (paquete dalmeet_executor): plan de la IA → aprobación → ejecución → resultados → reporte.
+        st.Page("vistas/executor.py", title="Marketing Executor", icon="⚙️", url_path="executor"),
+        # Centro de marketing de Sofía (fotos editadas + descripción): oculto porque el equipo eligió el Executor.
+        # st.Page("vistas/marketing.py", title="Centro de marketing", icon="📸", url_path="marketing"),
         st.Page("vistas/calendario.py", title="Calendario", icon="🗓️", url_path="calendario"),
         st.Page("vistas/kit.py", title="Kit de difusión", icon="📣", url_path="kit"),
         st.Page("vistas/alcance.py", title="Tu alcance", icon="📈", url_path="alcance"),

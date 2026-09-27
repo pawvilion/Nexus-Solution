@@ -25,7 +25,9 @@ Además de la conversación, la app tiene dos páginas más (menú de arriba):
 | Calendario | La semana de Bárbara ordenada por día: cuándo publicar, preparar contenido, atender, fabricar y comprar insumos. Se edita en una tabla y el Centro de marketing usa sus días de publicar |
 | 📸 Centro de marketing | Plan de Instagram de la semana según sus días de publicar: pide las fotos, las edita (formato, luz, texto), escribe la descripción y, tras su aprobación, deja el paquete listo para programar |
 | 📣 Kit de difusión | **Tarjeta digital** de Terapias Dalmeet (link para la bio de Instagram) y **afiches con QR** para ferias, juntas de vecinos o el CESFAM. Cada QR dice de dónde llegó la persona |
-| 📈 Tu alcance | Los números de sus publicaciones (sacados de las capturas que sube), un gráfico y qué formato le funciona mejor |
+| 📈 Tu alcance | Los números de sus publicaciones (sacados de las capturas que sube), un gráfico y qué formato le funciona mejor. **Embudo de clientas** (me escribió → agendó o compró → volvió, según de dónde llegó) y un **reporte** que la IA usa para el siguiente plan |
+
+**El ciclo completo:** Bárbara.IA propone (chat y Centro de marketing) → Bárbara aprueba → publica y difunde (Kit) → mide (Tu alcance) → los resultados vuelven solos a la IA para el siguiente plan. El embudo y el reporte vienen del *Marketing Executor* de Benjamín, integrado aquí para no tener dos apps; su versión original está en el historial de Git (commit `5ba7a45`).
 
 La tarjeta pública se abre con `?p=tarjeta` (ej. https://nexus-dalmeet.streamlit.app/?p=tarjeta) y no muestra nada de Bárbara.IA.
 
@@ -52,6 +54,8 @@ vistas/tarjeta.py    ← tarjeta digital pública (lo que ven las clientas)
 nexus/config.py      ← claves y datos de contacto, leídos de los Secrets
 nexus/difusion.py    ← contenido de la tarjeta, links de WhatsApp y dibujo del afiche
 nexus/estadisticas.py← números de las publicaciones (data/estadisticas.json)
+nexus/embudo.py      ← embudo de clientas por origen, solo cantidades (data/embudo.json)
+nexus/resultados.py  ← resumen de resultados que recibe la IA y reporte para descargar
 nexus/fuentes/       ← fuentes Lora y Nunito para el afiche (licencia OFL)
 nexus/esencia.md     ← quién es Bárbara, qué cree y qué sueña (la IA lo lee siempre)
 nexus/prompts.py     ← personalidad de Bárbara.IA, límites y los 3 módulos

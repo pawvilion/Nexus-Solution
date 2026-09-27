@@ -1,14 +1,18 @@
-"""Tu alcance en números: cómo les va a las publicaciones de Bárbara y de dónde la encuentran.
+"""Tu alcance en números: cómo les va a las publicaciones de Bárbara, de dónde la encuentran
+y cuántas consultas se convierten en clientas.
 
-Responsable: Persona 3.
-Los números salen de las capturas que sube en "📊 Mis estadísticas" (o los escribe a mano en la tabla).
+Responsable: Persona 3. El embudo de clientas viene del Marketing Executor de Benjamín.
+Los números de publicaciones salen de las capturas que sube en "📊 Mis estadísticas" (o los escribe a mano).
 """
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
-from nexus import actividad, estadisticas
+from nexus import actividad, embudo, estadisticas, resultados
 
 # Colores de la marca con buen contraste sobre el fondo crema (barras 4,2:1; texto 10,5:1).
 BARRA, TINTA, TINTA_SUAVE, GRILLA = "#5A7F60", "#3F3A34", "#6B645C", "#E8DFD3"
@@ -103,3 +107,55 @@ if visitas:
         pd.DataFrame(sorted(visitas.items(), key=lambda x: -x[1]), columns=["Origen", "Visitas"]),
         hide_index=True, width="stretch",
     )
+
+# --- Embudo: de consulta a clienta (solo cantidades, sin datos personales) ---
+st.divider()
+st.subheader("🧲 De consulta a clienta")
+st.caption("Anota cuántas personas te escriben y cuántas agendan o compran, según de dónde llegaron. "
+           "Así sabrás qué difusión te trae clientas de verdad. Solo cantidades: nunca nombres ni datos de salud.")
+
+registros = embudo.cargar()
+hoy = datetime.now(ZoneInfo("America/Santiago")).date()
+
+with st.form("embudo", clear_on_submit=True, border=True):
+    col_origen, col_servicio = st.columns(2)
+    # Los lugares de sus afiches con QR también aparecen como opción, y puede escribir uno nuevo.
+    opciones = embudo.ORIGENES + sorted(set(visitas) - set(embudo.ORIGENES) - {"Link directo"})
+    origen = col_origen.selectbox("¿De dónde llegó?", opciones, accept_new_options=True)
+    servicio = col_servicio.selectbox("¿Qué le interesó?", embudo.SERVICIOS)
+    col_etapa, col_cantidad, col_fecha = st.columns([2, 1, 1])
+    etapa = col_etapa.radio("¿Qué pasó?", list(embudo.ETAPAS), format_func=embudo.ETAPAS.get, horizontal=True)
+    cantidad = col_cantidad.number_input("Cuántas", min_value=1, value=1, step=1)
+    fecha = col_fecha.date_input("Fecha", value=hoy, format="DD-MM-YYYY")
+    if st.form_submit_button("Anotar", icon=":material/add:", type="primary"):
+        embudo.agregar(registros, fecha.isoformat(), origen or "Otro", servicio, etapa, cantidad)
+        st.toast("Anotado", icon="🌿")
+        st.rerun()
+
+if registros:
+    conv = embudo.conversion(registros)
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Me escribieron", embudo.total(registros, "consulta"))
+    col2.metric("Agendaron o compraron", embudo.total(registros, "agendo"))
+    col3.metric("Volvieron otra vez", embudo.total(registros, "volvio"))
+    col4.metric("Conversión", "—" if conv is None else f"{conv:.0f} %".replace(".", ","),
+                help="De cada 100 personas que te escriben, cuántas agendan o compran")
+
+    tabla_origen = pd.DataFrame(embudo.por_origen(registros))
+    tabla_origen["conversion"] = tabla_origen["conversion"].map(lambda c: "—" if pd.isna(c) else f"{c:.0f} %")
+    st.dataframe(
+        tabla_origen.rename(columns={"origen": "Origen", **embudo.ETAPAS, "conversion": "Conversión"}),
+        hide_index=True, width="stretch",
+    )
+    mejor = embudo.por_origen(registros)[0]
+    if mejor["agendo"]:
+        st.success(f"Lo que más clientas te trae: **{mejor['origen']}**. Vale la pena repetirlo.", icon="💡")
+
+# --- Reporte: resume todo y es lo que la IA usa para el siguiente plan ---
+st.divider()
+st.subheader("📝 Tu reporte")
+st.caption("Bárbara.IA tiene en cuenta estos resultados al armar tu plan de marketing y tu día, "
+           "para repetir lo que funciona y cambiar lo que no.")
+texto_reporte = resultados.reporte(hoy.strftime("%d-%m-%Y"))
+st.code(texto_reporte, language=None, wrap_lines=True)
+st.download_button("Descargar reporte", texto_reporte, f"reporte_dalmeet_{hoy.isoformat()}.txt", icon="⬇️")

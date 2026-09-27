@@ -69,21 +69,21 @@ def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) 
         return demo.responder(modo)
 
 
-def recordar(texto: str, respuesta: str) -> int:
-    """Guarda en la memoria lo nuevo que vale la pena recordar. Devuelve cuántos recuerdos se agregaron."""
+def recordar(texto: str, respuesta: str) -> list[str]:
+    """Actualiza los consolidados de la memoria con lo nuevo. Devuelve los temas que cambiaron."""
     if not api_key:
         # Modo demo: sin IA no se puede resumir, así que solo se guarda lo contado en "Conversemos".
-        return memoria.agregar(recuerdos, [texto], "esencia") if modo == "conversemos" else 0
-    from nexus.ia import extraer_recuerdos
+        return memoria.agregar_sin_ia(recuerdos, texto, ahora.date()) if modo == "conversemos" else []
+    from nexus.ia import actualizar_memoria
 
     material = f"Bárbara dijo: {texto}"
     if modo == "estadisticas":
         material += f"\n\nAnálisis de sus estadísticas:\n{respuesta}"
     try:
-        nuevos = extraer_recuerdos(material, memoria.como_texto(recuerdos), api_key, modelo, base_url)
+        cambios = actualizar_memoria(material, memoria.como_json(recuerdos), memoria.TEMAS, api_key, modelo, base_url)
     except Exception:
-        return 0  # si falla la memoria, la conversación sigue igual
-    return sum(memoria.agregar(recuerdos, textos, tipo) for tipo, textos in nuevos.items())
+        return []  # si falla la memoria, la conversación sigue igual
+    return memoria.actualizar(recuerdos, cambios, ahora.date())
 
 
 def enviar(texto: str, archivos: list | None = None) -> None:
@@ -96,10 +96,11 @@ def enviar(texto: str, archivos: list | None = None) -> None:
     with st.chat_message("assistant", avatar="🌿"):
         with st.spinner("Aterrizando tu idea..."):
             respuesta = generar_respuesta(historial, imagenes)
-            agregados = recordar(texto, respuesta)
+            actualizados = recordar(texto, respuesta)
     historial.append({"role": "assistant", "content": respuesta})
-    if agregados:
-        st.session_state.aviso = f"Guardé {agregados} {'cosa nueva' if agregados == 1 else 'cosas nuevas'} sobre ti 💭"
+    if actualizados:
+        temas = ", ".join(f"{memoria.TEMAS[t][0]} {memoria.TEMAS[t][1]}" for t in actualizados)
+        st.session_state.aviso = f"Actualicé lo que sé de ti: {temas}"
     st.rerun()
 
 
@@ -114,6 +115,38 @@ def preparar_inicio() -> dict:
         except Exception:
             pass  # si la IA falla, se usan las reglas
     return inicio.por_reglas(recuerdos, dias, ahora)
+
+
+@st.dialog("Lo que Nexus sabe de ti", width="large")
+def ver_tema(tema: str) -> None:
+    """Ventana con un consolidado completo: Bárbara puede leerlo, corregirlo u olvidarlo."""
+    emoji, titulo, _ = memoria.TEMAS[tema]
+    consolidado = recuerdos[tema]
+    st.subheader(f"{emoji} {titulo}")
+    fecha = datetime.strptime(consolidado["actualizado"], "%Y-%m-%d").strftime("%d-%m-%Y") if consolidado["actualizado"] else ""
+    st.caption(f"Actualizado el {fecha}. Si algo no es cierto, corrígelo aquí mismo.")
+    nuevo = st.text_area(titulo, consolidado["texto"], height=260, label_visibility="collapsed")
+
+    if st.session_state.get("olvidar_tema") == tema:
+        st.warning("¿Quieres que olvide todo este tema? No se puede deshacer.")
+        col_si, col_no = st.columns(2)
+        if col_si.button("Sí, olvidar", type="primary", width="stretch"):
+            memoria.olvidar(recuerdos, tema)
+            del st.session_state.olvidar_tema
+            st.rerun()
+        if col_no.button("Cancelar", width="stretch"):
+            del st.session_state.olvidar_tema
+            st.rerun(scope="fragment")
+    else:
+        col_guardar, col_olvidar = st.columns(2)
+        if col_guardar.button("Guardar cambios", icon=":material/check:", type="primary", width="stretch",
+                              disabled=nuevo.strip() == consolidado["texto"]):
+            memoria.actualizar(recuerdos, {tema: nuevo}, ahora.date())
+            st.session_state.aviso = f"Listo, corregí {emoji} {titulo}"
+            st.rerun()
+        if col_olvidar.button("Olvidar este tema", icon=":material/delete:", width="stretch"):
+            st.session_state.olvidar_tema = tema
+            st.rerun(scope="fragment")
 
 
 def elegir_accion(accion: dict) -> None:
@@ -157,30 +190,15 @@ with st.sidebar:
     if not recuerdos:
         st.caption("Aún nada. Cuéntame tus sueños en 💭 Conversemos o sube tus estadísticas.")
     else:
-        st.caption("Si algo no es cierto o no quieres que lo recuerde, pulsa «Olvidar».")
-    # Texto del recuerdo que espera confirmación para borrarse (se guarda el texto y no la
-    # posición, para no borrar otro si la lista cambia entre un clic y otro).
-    por_confirmar = st.session_state.get("por_olvidar")
-    for tipo, titulo in memoria.TIPOS.items():
-        del_tipo = [(i, r) for i, r in enumerate(recuerdos) if r["tipo"] == tipo]
-        if del_tipo:
-            with st.expander(f"{titulo} ({len(del_tipo)})"):
-                for i, recuerdo in del_tipo:
-                    st.markdown(recuerdo["texto"])
-                    if recuerdo["texto"] == por_confirmar:
-                        st.warning("¿Quieres que olvide esto?")
-                        col_si, col_no = st.columns(2)
-                        if col_si.button("Sí, olvidar", key=f"si-olvidar-{i}", type="primary"):
-                            memoria.borrar(recuerdos, i)
-                            del st.session_state.por_olvidar
-                            st.rerun()
-                        if col_no.button("Cancelar", key=f"no-olvidar-{i}"):
-                            del st.session_state.por_olvidar
-                            st.rerun()
-                    elif st.button("Olvidar", key=f"olvidar-{i}", icon=":material/delete:", type="tertiary"):
-                        st.session_state.por_olvidar = recuerdo["texto"]
-                        st.rerun()
-                    st.divider()
+        st.caption("Se va completando con cada conversación. Toca un tema para verlo entero o corregirlo.")
+    for tema, (emoji, titulo, _) in memoria.TEMAS.items():
+        if tema not in recuerdos:
+            continue
+        with st.container(border=True):
+            if st.button(f"{emoji} {titulo}", key=f"tema-{tema}", type="tertiary"):
+                ver_tema(tema)
+            texto = recuerdos[tema]["texto"]
+            st.caption(texto[:90] + ("…" if len(texto) > 90 else ""))
 
 st.title("🌿 Nexus")
 st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")

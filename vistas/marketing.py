@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 
 import streamlit as st
 
-from nexus import marketing, memoria, revision, semana
+from nexus import marketing, memoria, resultados, revision, semana
 from nexus.config import config_ia
 
 api_key, base_url, modelo = config_ia()
@@ -31,7 +31,9 @@ def crear_plan() -> None:
 
         try:
             texto = ", ".join(f"{e['dia']} {e['hora']}".strip() for e in espacios)
-            piezas = planificar_marketing(texto, memoria.como_texto(memoria.cargar()), api_key, modelo, base_url)
+            # Sus resultados (mejores formatos, qué le trae clientas) para que el plan repita lo que funciona.
+            contexto = memoria.como_texto(memoria.cargar()) + "\n\n" + resultados.como_texto()
+            piezas = planificar_marketing(texto, contexto, api_key, modelo, base_url)
         except Exception:
             st.session_state.aviso_mkt = "No pude conectarme con la IA, así que te dejé un plan base. Puedes usarlo igual."
     if not piezas:

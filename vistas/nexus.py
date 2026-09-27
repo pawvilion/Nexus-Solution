@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 
 import streamlit as st
 
-from nexus import actividad, demo, estadisticas, inicio, memoria, revision, semana
+from nexus import actividad, demo, estadisticas, inicio, memoria, resultados, revision, semana
 from nexus.config import config_ia
 from nexus.prompts import MODOS
 
@@ -70,7 +70,8 @@ def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) 
     from nexus.ia import IASaturada, responder
 
     try:
-        contexto = memoria.como_texto(recuerdos) + "\n\n" + semana.como_texto(mi_semana)  # así sugiere sus días de publicar
+        # Su semana (para sugerir sus días de publicar) y sus resultados (para repetir lo que funciona).
+        contexto = "\n\n".join([memoria.como_texto(recuerdos), semana.como_texto(mi_semana), resultados.como_texto()])
         return responder(modo, historial, contexto, api_key, modelo, imagenes, base_url)
     except IASaturada:
         # Plan gratis de Gemini: 15 consultas por minuto por modelo. Se libera solo en un momento.
@@ -141,7 +142,7 @@ def preparar_inicio() -> dict:
 
         try:
             situacion = inicio.contexto(recuerdos, dias, ahora) + f"\nSu plan de hoy: {semana.resumen_hoy(mi_semana, ahora.weekday())}."
-            return generar_inicio(memoria.como_texto(recuerdos), situacion, api_key, modelo, base_url)
+            return generar_inicio(memoria.como_texto(recuerdos) + "\n\n" + resultados.como_texto(), situacion, api_key, modelo, base_url)
         except Exception:
             pass  # si la IA falla, se usan las reglas
     return inicio.por_reglas(recuerdos, dias, ahora)

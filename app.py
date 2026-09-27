@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 import streamlit as st
 
 from nexus import actividad, demo, inicio, memoria
+from nexus.ia import GEMINI_MODELO_POR_DEFECTO, GEMINI_URL, MODELO_POR_DEFECTO
 from nexus.prompts import MODOS
 
 st.set_page_config(page_title="Nexus · Terapias Dalmeet", page_icon="🌿", layout="centered")
@@ -62,7 +63,7 @@ def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) 
     from nexus.ia import responder
 
     try:
-        return responder(modo, historial, memoria.como_texto(recuerdos), api_key, modelo, imagenes)
+        return responder(modo, historial, memoria.como_texto(recuerdos), api_key, modelo, imagenes, base_url)
     except Exception as error:
         st.warning(f"No pude conectarme con la IA ({error}). Te muestro un ejemplo.")
         return demo.responder(modo)
@@ -79,7 +80,7 @@ def recordar(texto: str, respuesta: str) -> int:
     if modo == "estadisticas":
         material += f"\n\nAnálisis de sus estadísticas:\n{respuesta}"
     try:
-        nuevos = extraer_recuerdos(material, memoria.como_texto(recuerdos), api_key, modelo)
+        nuevos = extraer_recuerdos(material, memoria.como_texto(recuerdos), api_key, modelo, base_url)
     except Exception:
         return 0  # si falla la memoria, la conversación sigue igual
     return sum(memoria.agregar(recuerdos, textos, tipo) for tipo, textos in nuevos.items())
@@ -109,7 +110,7 @@ def preparar_inicio() -> dict:
         from nexus.ia import generar_inicio
 
         try:
-            return generar_inicio(memoria.como_texto(recuerdos), inicio.contexto(recuerdos, dias, ahora), api_key, modelo)
+            return generar_inicio(memoria.como_texto(recuerdos), inicio.contexto(recuerdos, dias, ahora), api_key, modelo, base_url)
         except Exception:
             pass  # si la IA falla, se usan las reglas
     return inicio.por_reglas(recuerdos, dias, ahora)
@@ -121,8 +122,12 @@ def elegir_accion(accion: dict) -> None:
     st.session_state.pendiente = accion.get("mensaje")
 
 
-api_key = obtener_secreto("OPENAI_API_KEY")
-modelo = obtener_secreto("OPENAI_MODEL") or "gpt-4o-mini"
+# Sirve una clave de OpenAI (de pago) o de Gemini (gratis). Con Gemini solo cambia la dirección y el modelo.
+if obtener_secreto("GEMINI_API_KEY"):
+    api_key, base_url, modelo_por_defecto = obtener_secreto("GEMINI_API_KEY"), GEMINI_URL, GEMINI_MODELO_POR_DEFECTO
+else:
+    api_key, base_url, modelo_por_defecto = obtener_secreto("OPENAI_API_KEY"), None, MODELO_POR_DEFECTO
+modelo = obtener_secreto("MODELO") or modelo_por_defecto
 ahora = datetime.now(ZoneInfo("America/Santiago"))  # hora de Chile, aunque el servidor esté en otro país
 recuerdos = memoria.cargar()
 registro = actividad.cargar()

@@ -11,7 +11,17 @@ from openai import OpenAI
 
 from . import prompts
 
-MODELO_POR_DEFECTO = "gpt-4o-mini"  # barato y entiende imágenes; se puede cambiar con OPENAI_MODEL en secrets
+MODELO_POR_DEFECTO = "gpt-4o-mini"  # barato y entiende imágenes; se puede cambiar con MODELO en secrets
+
+# Gemini (Google) tiene plan gratis y acepta el mismo formato que OpenAI: solo cambia la dirección y el modelo.
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+GEMINI_MODELO_POR_DEFECTO = "gemini-flash-lite-latest"  # rápido (2-3 s) y con plan gratis; gemini-2.5-flash ya no se ofrece a cuentas nuevas
+
+
+def _leer_json(texto: str) -> dict:
+    """Lee el JSON de la respuesta, aunque venga envuelto en ```json ... ``` (a Gemini le pasa)."""
+    texto = texto.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
+    return json.loads(texto)
 
 
 def responder(
@@ -21,6 +31,7 @@ def responder(
     api_key: str,
     modelo: str = MODELO_POR_DEFECTO,
     imagenes: list[tuple[bytes, str]] | None = None,
+    base_url: str | None = None,
 ) -> str:
     """Envía la conversación del módulo a ChatGPT y devuelve su respuesta en Markdown.
 
@@ -36,7 +47,7 @@ def responder(
             for datos, mime in imagenes
         ]
 
-    cliente = OpenAI(api_key=api_key)
+    cliente = OpenAI(api_key=api_key, base_url=base_url)
     respuesta = cliente.chat.completions.create(
         model=modelo,
         temperature=0.8,  # algo de creatividad: es contenido, no cálculos
@@ -45,9 +56,11 @@ def responder(
     return respuesta.choices[0].message.content
 
 
-def generar_inicio(memoria: str, contexto: str, api_key: str, modelo: str = MODELO_POR_DEFECTO) -> dict:
+def generar_inicio(
+    memoria: str, contexto: str, api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None
+) -> dict:
     """Saludo personal y 3 acciones para hoy: {"saludo": str, "acciones": [{"titulo", "modo", "mensaje"}]}."""
-    cliente = OpenAI(api_key=api_key)
+    cliente = OpenAI(api_key=api_key, base_url=base_url)
     respuesta = cliente.chat.completions.create(
         model=modelo,
         temperature=0.9,  # que el saludo no sea igual todos los días
@@ -59,16 +72,18 @@ def generar_inicio(memoria: str, contexto: str, api_key: str, modelo: str = MODE
             ),
         }],
     )
-    datos = json.loads(respuesta.choices[0].message.content)
+    datos = _leer_json(respuesta.choices[0].message.content)
     acciones = [a for a in datos.get("acciones", []) if a.get("modo") in prompts.MODOS][:3]
     if not datos.get("saludo") or not acciones:
         raise ValueError("La IA no devolvió un inicio válido")
     return {"saludo": datos["saludo"], "acciones": acciones}
 
 
-def extraer_recuerdos(texto: str, memoria: str, api_key: str, modelo: str = MODELO_POR_DEFECTO) -> dict:
+def extraer_recuerdos(
+    texto: str, memoria: str, api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None
+) -> dict:
     """Devuelve lo nuevo que vale la pena recordar: {"esencia": [...], "redes": [...]}."""
-    cliente = OpenAI(api_key=api_key)
+    cliente = OpenAI(api_key=api_key, base_url=base_url)
     respuesta = cliente.chat.completions.create(
         model=modelo,
         temperature=0,
@@ -78,5 +93,5 @@ def extraer_recuerdos(texto: str, memoria: str, api_key: str, modelo: str = MODE
             {"role": "user", "content": texto},
         ],
     )
-    datos = json.loads(respuesta.choices[0].message.content)
+    datos = _leer_json(respuesta.choices[0].message.content)
     return {"esencia": datos.get("esencia", []), "redes": datos.get("redes", [])}

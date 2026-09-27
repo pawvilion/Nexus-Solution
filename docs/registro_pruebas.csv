@@ -1,0 +1,7 @@
+fecha;responsable;tarea;dato_utilizado;resultado_esperado;resultado_observado;sin_ayuda;evidencia
+27/09/2026;Equipo Nexus;Prueba interna: reglas del revisor de seguridad;10 frases de prueba (ej. "Esta terapia cura la ansiedad, resultados garantizados");Cada frase con las alertas esperadas;10 de 10 frases con las alertas esperadas (ej. 2 rojas y 1 amarilla en la frase de ejemplo);No aplica;nexus/revision.py (py -m nexus.revision)
+27/09/2026;Equipo Nexus;Prueba interna: respuestas demo sin alertas rojas;Las 5 respuestas de nexus/demo.py;Ninguna alerta roja;0 alertas rojas y 1 amarilla en Laboratorio por "[a definir por Barbara]" (esperada);No aplica;nexus/revision.py
+[COMPLETAR];Equipo Nexus;Prueba interna: cerrar, reabrir y repetir el flujo;[COMPLETAR];La app abre y responde igual tras reabrir;[COMPLETAR];No aplica;evidencia/interna_reapertura.png
+[COMPLETAR];Pavel Andrade;Tarea critica 1: idea -> post (Guion para redes);[COMPLETAR idea que escribio Barbara];Guion y texto que publicaria con pocos cambios, sin alertas rojas;[COMPLETAR];[Si/No];evidencia/tarea1_guion.png
+[COMPLETAR];Pavel Andrade;Tarea critica 2: inspiracion -> experiencia (Laboratorio);[COMPLETAR];Experiencia concreta que ofreceria;[COMPLETAR];[Si/No];evidencia/tarea2_experiencia.png
+[COMPLETAR];Pavel Andrade;Tarea critica 3: propuesta de difusion (Difusion);[COMPLETAR organizacion elegida];Mensaje listo para enviar;[COMPLETAR];[Si/No];evidencia/tarea3_difusion.png

@@ -9,9 +9,12 @@ from zoneinfo import ZoneInfo
 
 import streamlit as st
 
-from nexus import actividad, demo, estadisticas, inicio, memoria
+from nexus import actividad, demo, estadisticas, inicio, memoria, revision
 from nexus.config import config_ia
 from nexus.prompts import MODOS
+
+# Módulos cuyo resultado Bárbara publica o envía: ahí se revisa el texto antes de copiarlo.
+MODOS_PARA_PUBLICAR = {"guion", "experiencia", "difusion"}
 
 # Frases de ejemplo para que Bárbara no parta frente a una caja vacía.
 EJEMPLOS = {
@@ -45,6 +48,20 @@ def texto_para_copiar(respuesta: str) -> str:
     texto = texto.replace("*", "").replace("__", "")  # negritas y cursivas
     texto = re.sub(r"^(#+|>)\s*", "", texto, flags=re.MULTILINE)  # títulos y citas
     return texto.strip()
+
+
+def mostrar_revision(respuesta: str) -> None:
+    """Avisa si el texto tiene promesas de salud, precios o datos por completar (ver nexus/revision.py)."""
+    alertas = revision.revisar(texto_para_copiar(respuesta))
+    if not alertas:
+        st.caption("✅ Revisado: sin promesas de salud ni datos por completar. Igual léelo antes de publicar.")
+        return
+    # El $ se escapa porque Streamlit lo interpreta como fórmula matemática.
+    lineas = "\n".join(f"- **“{a.frase.replace('$', chr(92) + '$')}”**: {a.consejo}" for a in alertas)
+    if revision.hay_rojas(alertas):
+        st.error(f"Antes de publicar o enviar, cambia esto:\n\n{lineas}", icon="✋")
+    else:
+        st.warning(f"Revisa esto antes de publicar o enviar:\n\n{lineas}", icon="👀")
 
 
 def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) -> str:
@@ -266,6 +283,8 @@ for i, mensaje in enumerate(historial):
 
     with st.chat_message("assistant", avatar="🌿"):
         st.markdown(mensaje["content"])
+        if modo in MODOS_PARA_PUBLICAR:
+            mostrar_revision(mensaje["content"])
         idea = {"titulo": MODOS[modo]["titulo"], "contenido": mensaje["content"]}
         util = idea in guardadas
         etiqueta = "Guardada en tus ideas" if util else "Me sirve"

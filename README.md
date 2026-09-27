@@ -56,7 +56,8 @@ nexus/inicio.py      ← "Tu día con Nexus": saludo y acciones del día (reglas
 nexus/memoria.py     ← guarda y lee lo que Nexus recuerda (data/memoria.json, fuera de GitHub)
 nexus/actividad.py   ← registra cuándo publica (data/actividad.json, fuera de GitHub)
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
-docs/                ← contexto del cliente y guía de la entrega
+nexus/revision.py    ← revisa lo que escribe la IA: marca promesas de cura, diagnósticos, precios y datos por completar
+docs/                ← contexto del cliente, guía de la entrega, informe, guía de uso y registro de pruebas
 ```
 
 ## Cómo ejecutarlo en tu ordenador

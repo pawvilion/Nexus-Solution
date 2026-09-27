@@ -156,16 +156,31 @@ with st.sidebar:
     st.subheader("🧠 Lo que Nexus sabe de ti")
     if not recuerdos:
         st.caption("Aún nada. Cuéntame tus sueños en 💭 Conversemos o sube tus estadísticas.")
+    else:
+        st.caption("Si algo no es cierto o no quieres que lo recuerde, pulsa «Olvidar».")
+    # Texto del recuerdo que espera confirmación para borrarse (se guarda el texto y no la
+    # posición, para no borrar otro si la lista cambia entre un clic y otro).
+    por_confirmar = st.session_state.get("por_olvidar")
     for tipo, titulo in memoria.TIPOS.items():
         del_tipo = [(i, r) for i, r in enumerate(recuerdos) if r["tipo"] == tipo]
         if del_tipo:
             with st.expander(f"{titulo} ({len(del_tipo)})"):
                 for i, recuerdo in del_tipo:
-                    col_texto, col_borrar = st.columns([6, 1], vertical_alignment="center")
-                    col_texto.markdown(recuerdo["texto"])
-                    if col_borrar.button("🗑️", key=f"borrar-{i}", help="Olvidar esto"):
-                        memoria.borrar(recuerdos, i)
+                    st.markdown(recuerdo["texto"])
+                    if recuerdo["texto"] == por_confirmar:
+                        st.warning("¿Quieres que olvide esto?")
+                        col_si, col_no = st.columns(2)
+                        if col_si.button("Sí, olvidar", key=f"si-olvidar-{i}", type="primary"):
+                            memoria.borrar(recuerdos, i)
+                            del st.session_state.por_olvidar
+                            st.rerun()
+                        if col_no.button("Cancelar", key=f"no-olvidar-{i}"):
+                            del st.session_state.por_olvidar
+                            st.rerun()
+                    elif st.button("Olvidar", key=f"olvidar-{i}", icon=":material/delete:", type="tertiary"):
+                        st.session_state.por_olvidar = recuerdo["texto"]
                         st.rerun()
+                    st.divider()
 
 st.title("🌿 Nexus")
 st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")

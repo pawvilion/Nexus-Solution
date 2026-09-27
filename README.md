@@ -51,7 +51,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-**Sin API key la app funciona en modo demo**, con respuestas de ejemplo. Cuando haya API key, copia `.streamlit/secrets.toml.example` como `.streamlit/secrets.toml` y pon la clave. Ese archivo **nunca se sube a GitHub** (ya está en `.gitignore`).
+**Sin API key la app funciona en modo demo**, con respuestas de ejemplo. Para usar la IA real, copia `.streamlit/secrets.toml.example` como `.streamlit/secrets.toml` y pon la clave. Ese archivo **nunca se sube a GitHub** (ya está en `.gitignore`).
+
+Usamos **Gemini de Google**, que tiene plan gratis (clave en https://aistudio.google.com), con el modelo `gemini-flash-lite-latest`, que es rápido. La app también acepta una clave de OpenAI si algún día se paga. Ojo: en el plan gratis Google puede usar lo que se le envía para mejorar sus productos, así que no conviene escribir datos privados.
 
 ## Publicar en Streamlit Cloud
 

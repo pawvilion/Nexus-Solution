@@ -34,7 +34,7 @@ st.markdown("  ".join(f":{color}-badge[{nombre}: {conteo[nombre]}]" for nombre, 
 for columna, (i, dia) in zip(st.columns(7, gap="small", border=True), enumerate(semana.DIAS)):
     fecha = lunes + timedelta(days=i)
     with columna:
-        st.markdown(f"**{dia}**  \n{fecha:%d-%m}" + ("  \n:primary-badge[Hoy]" if fecha == hoy else ""))
+        st.markdown(f"**{dia}** · {fecha:%d-%m}" + ("  \n:primary-badge[Hoy]" if fecha == hoy else ""))
         del_dia = semana.del_dia(filas, dia)
         if not del_dia:
             st.caption("Libre")
@@ -42,7 +42,8 @@ for columna, (i, dia) in zip(st.columns(7, gap="small", border=True), enumerate(
             color = semana.ACTIVIDADES.get(fila["actividad"], "gray")
             detalle = f"  \n<small>{escape(fila['detalle'])}</small>" if fila["detalle"] else ""
             # Texto en color y no etiqueta: así los nombres largos saltan de línea en vez de cortarse.
-            st.markdown(f"**{fila['hora'] or 'Todo el día'}**  \n:{color}[**{fila['actividad']}**]{detalle}", unsafe_allow_html=True)
+            # Hora y actividad en la misma línea: en el celular (días uno debajo del otro) la semana queda más corta.
+            st.markdown(f"**{fila['hora'] or 'Todo el día'}** · :{color}[**{fila['actividad']}**]{detalle}", unsafe_allow_html=True)
 
 # --- Editar ---
 st.subheader("Editar mi semana")

@@ -55,7 +55,7 @@ with st.container(border=True):
         "Ponla en la bio de Instagram o compártela por WhatsApp."
     )
     link_bio = difusion.link_tarjeta(url_app(), "Instagram")
-    st.code(link_bio, language=None)
+    st.code(link_bio, language=None, wrap_lines=True)  # en el celular el link salta de línea en vez de salirse
     st.link_button("Ver cómo se ve", difusion.link_tarjeta(url_app(), None), icon="👀")
 
 # --- Afiche con QR ---

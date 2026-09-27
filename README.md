@@ -22,7 +22,7 @@ Además de la conversación, la app tiene dos páginas más (menú de arriba):
 
 | Página | Qué hace |
 |--------|----------|
-| 🗓️ Mi semana (barra lateral) | Calendario siempre visible: qué días publicar, preparar contenido, atender, fabricar y comprar insumos. Se edita en una tabla |
+| Calendario | La semana de Bárbara ordenada por día: cuándo publicar, preparar contenido, atender, fabricar y comprar insumos. Se edita en una tabla y el Centro de marketing usa sus días de publicar |
 | 📸 Centro de marketing | Plan de Instagram de la semana según sus días de publicar: pide las fotos, las edita (formato, luz, texto), escribe la descripción y, tras su aprobación, deja el paquete listo para programar |
 | 📣 Kit de difusión | **Tarjeta digital** de Terapias Dalmeet (link para la bio de Instagram) y **afiches con QR** para ferias, juntas de vecinos o el CESFAM. Cada QR dice de dónde llegó la persona |
 | 📈 Tu alcance | Los números de sus publicaciones (sacados de las capturas que sube), un gráfico y qué formato le funciona mejor |
@@ -62,7 +62,8 @@ nexus/actividad.py   ← registra cuándo publica (data/actividad.json, fuera de
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
 vistas/marketing.py  ← Centro de marketing: plan de la semana, subir fotos, revisar, aprobar y programar
 nexus/marketing.py   ← plan de Instagram, edición de fotos (Pillow) y paquete para programar (data/marketing.json, data/medios/)
-nexus/semana.py      ← "Mi semana": calendario en la barra lateral (publicar, terapias, fabricar, insumos…), editable (data/semana.json)
+vistas/calendario.py ← Calendario: la semana en 7 columnas y la tabla para editarla
+nexus/semana.py      ← datos del calendario y propuesta inicial (data/semana.json)
 nexus/revision.py    ← revisa lo que escribe la IA: marca promesas de cura, diagnósticos, precios y datos por completar
 docs/                ← contexto del cliente, guía de la entrega, informe, guía de uso y registro de pruebas
 ```

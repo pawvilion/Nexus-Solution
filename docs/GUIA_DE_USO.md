@@ -56,17 +56,17 @@ Además, confirma siempre que:
 
 Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo o **olvídalo**. Bárbara.IA no guarda datos de salud ni nombres de clientas.
 
-## 7. Mi semana (barra lateral, siempre a la vista)
+## 7. Calendario (menú de arriba)
 
-Muestra qué te toca **hoy** y el resto de la semana: 📣 publicar, ✍️ preparar contenido, 💆 terapias, 🧵 fabricar productos, 🛒 comprar insumos, 🤝 difusión y 🌿 descanso. En el celular, lo de hoy también aparece arriba del chat; la semana completa está en el menú **»** de arriba a la izquierda.
+Muestra tu semana ordenada por día, de lunes a domingo, con la hora y una etiqueta de color para cada actividad: publicar, preparar contenido, terapias, fabricar productos, comprar insumos, responder mensajes, difusión y descanso. El día de hoy aparece marcado. En el celular, los días quedan uno debajo del otro.
 
-**¿Algo no te acomoda?** Toca **✏️ Editar mi semana**: cambia el día, la hora o la actividad, agrega filas al final o borra las que sobren, y toca **Guardar mi semana**. Si te enredas, **Volver a la propuesta inicial**.
+**¿Algo no te acomoda?** Más abajo, en **Editar mi semana**, cambia el día, la hora o la actividad, agrega filas al final o borra las que sobren, y toca **Guardar cambios**. Si te enredas, **Volver a la propuesta inicial**.
 
 ## 8. 📸 Centro de marketing (menú de arriba)
 
 Tú solo sacas las fotos que te pido; yo las edito y escribo la descripción.
 
-1. Toca **Armar mi plan de la semana**. Sale un post por cada día de 📣 Publicar de tu semana, más 2 historias.
+1. Toca **Armar mi plan de la semana**. Sale un post por cada día de Publicar de tu Calendario, más 2 historias.
 2. En cada publicación verás **"Lo que necesito que me mandes"**: saca esas fotos o videos con el celular.
 3. Súbelos **tal cual, sin editar**, y toca **🪄 Preparar mi publicación**.
 4. Revisa la foto editada y la descripción. Puedes cambiar el texto sobre la imagen (**Aplicar texto**) o la descripción.

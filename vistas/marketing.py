@@ -23,7 +23,7 @@ filas_semana = semana.cargar()
 def crear_plan() -> None:
     espacios = marketing.espacios_de_publicar(filas_semana)
     if not espacios:
-        st.session_state.aviso_mkt = "Tu semana no tiene días de 📣 Publicar. Agrégalos en ✏️ Editar mi semana (barra lateral)."
+        st.session_state.aviso_mkt = "Tu semana no tiene días de Publicar. Agrégalos en la sección Calendario, en Editar mi semana."
         return
     piezas = None
     if api_key:

@@ -228,9 +228,6 @@ with st.sidebar:
 
 st.title("🌿 Bárbara.IA")
 st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")
-# En el celular la barra lateral se esconde: lo de hoy se ve también aquí arriba.
-st.caption(f"🗓️ **Hoy:** {semana.resumen_hoy(mi_semana, ahora.weekday())} · tu semana completa está en el menú lateral (» arriba a la izquierda)")
-
 if not api_key:
     st.info("Modo demo: sin API key, Bárbara.IA muestra respuestas de ejemplo.")
 

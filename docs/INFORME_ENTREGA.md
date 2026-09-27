@@ -40,7 +40,7 @@ Fuente: entrevistas y reunión 1 con Bárbara (estimaciones de la PYME, resumida
 ### 1.4 ¿Qué quedó dentro y fuera del alcance de esta entrega?
 
 <!-- max:500 -->
-Dentro: app Bárbara.IA con 5 módulos de conversación, memoria, calendario "Mi semana" editable, Centro de marketing (plan semanal, pide fotos, las edita y escribe la descripción), kit con tarjeta y afiches QR, "Tu alcance" y revisor de promesas de salud. Fuera: costos y precios (otro equipo), publicación automática en Instagram (requiere la API de Meta; hoy Bárbara aprueba y programa en Meta Business Suite) y memoria permanente en base de datos.
+Dentro: app Bárbara.IA con 5 módulos de conversación, memoria, sección Calendario editable, Centro de marketing (plan semanal, pide fotos, las edita y escribe la descripción), kit con tarjeta y afiches QR, "Tu alcance" y revisor de promesas de salud. Fuera: costos y precios (otro equipo), publicación automática en Instagram (requiere la API de Meta; hoy Bárbara aprueba y programa en Meta Business Suite) y memoria permanente en base de datos.
 <!-- /max -->
 
 ### 1.5 Distribución de tareas entre IA y personas
@@ -58,7 +58,7 @@ Dentro: app Bárbara.IA con 5 módulos de conversación, memoria, calendario "Mi
 ### 2.1 ¿Cómo funciona la solución de principio a fin?
 
 <!-- max:900 -->
-Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebook, sin cuenta. 1) La barra lateral muestra siempre "Mi semana": qué días publica, atiende, fabrica y compra insumos; la edita si algo no le acomoda. 2) "Tu día" le propone 3 acciones. 3) En los módulos cuenta una idea y recibe guiones, experiencias o propuestas con su voz. 4) El Centro de marketing arma el plan de Instagram según sus días de publicar y le pide fotos concretas; la app las recorta al formato, ajusta la luz y agrega texto, y la IA elige las mejores y escribe la descripción. 5) Un revisor impide aprobar si hay promesas de cura o diagnósticos. 6) Aprueba, descarga y programa en Meta Business Suite. IA: Gemini gratis. Limitaciones: la publicación final es manual, los videos no se editan, sin clave usa modo demo y los datos se borran si Streamlit reinicia.
+Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebook, sin cuenta. 1) La sección Calendario ordena su semana: qué días publica, atiende, fabrica y compra insumos; la edita si algo no le acomoda. 2) "Tu día" le propone 3 acciones. 3) En los módulos cuenta una idea y recibe guiones, experiencias o propuestas con su voz. 4) El Centro de marketing arma el plan de Instagram según sus días de publicar y le pide fotos concretas; la app las recorta al formato, ajusta la luz y agrega texto, y la IA elige las mejores y escribe la descripción. 5) Un revisor impide aprobar si hay promesas de cura o diagnósticos. 6) Aprueba, descarga y programa en Meta Business Suite. IA: Gemini gratis. Limitaciones: la publicación final es manual, los videos no se editan, sin clave usa modo demo y los datos se borran si Streamlit reinicia.
 <!-- /max -->
 
 ---

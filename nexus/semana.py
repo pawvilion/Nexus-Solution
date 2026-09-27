@@ -1,31 +1,28 @@
 """La semana de Bárbara: qué días publica, prepara contenido, atiende, fabrica y compra insumos.
 
 Responsable: Sofía.
-Se ve siempre en la barra lateral (la dibuja app.py en todas las páginas) y Bárbara la edita
-cuando algo no le acomoda. La IA también la recibe, para sugerir publicar en sus días de publicar.
+Se ve y se edita en la página Calendario (vistas/calendario.py). La IA también la recibe, para
+sugerir publicar en sus días de publicar y armar el plan del Centro de marketing.
 Se guarda en data/semana.json, igual que la memoria (fuera de GitHub).
 """
 
 import json
-from html import escape
 from pathlib import Path
-
-import streamlit as st
 
 ARCHIVO = Path(__file__).parent.parent / "data" / "semana.json"
 
 DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
-# Qué puede anotar en su semana y el ícono con que se ve en la barra lateral.
+# Qué puede anotar en su semana y el color de su etiqueta en el calendario (colores de st.badge).
 ACTIVIDADES = {
-    "Publicar": "📣",
-    "Preparar contenido": "✍️",
-    "Terapias": "💆",
-    "Fabricar productos": "🧵",
-    "Comprar insumos": "🛒",
-    "Responder mensajes": "💬",
-    "Difusión": "🤝",
-    "Descanso": "🌿",
+    "Publicar": "red",
+    "Preparar contenido": "violet",
+    "Terapias": "green",
+    "Fabricar productos": "orange",
+    "Comprar insumos": "blue",
+    "Responder mensajes": "blue",
+    "Difusión": "primary",
+    "Descanso": "gray",
 }
 
 # Propuesta inicial: 3 días de publicar (martes y jueves en la noche, sábado en la mañana, cuando más
@@ -76,15 +73,10 @@ def del_dia(filas: list[dict], dia: str) -> list[dict]:
     return sorted((f for f in filas if f["dia"] == dia), key=lambda f: f["hora"] or "99")
 
 
-def _corta(fila: dict) -> str:
-    """Ej.: "💆 15:00 Terapias"."""
-    return " ".join(parte for parte in (ACTIVIDADES.get(fila["actividad"], "•"), fila["hora"], fila["actividad"]) if parte)
-
-
 def resumen_hoy(filas: list[dict], dia_semana: int) -> str:
-    """Una línea con lo de hoy, para verla arriba del chat (en el celular la barra lateral se esconde)."""
+    """Lo de hoy en una línea, ej.: "10:00 Fabricar productos, 15:00 Terapias"."""
     hoy = del_dia(filas, DIAS[dia_semana])
-    return " · ".join(_corta(f) for f in hoy) or "nada anotado"
+    return ", ".join(f"{f['hora']} {f['actividad']}".strip() for f in hoy) or "nada anotado"
 
 
 def como_texto(filas: list[dict]) -> str:
@@ -98,57 +90,3 @@ def como_texto(filas: list[dict]) -> str:
         return ""
     return ("## Su semana (la organiza ella misma)\n"
             "Si sugieres cuándo publicar, usa uno de sus días de publicar.\n" + "\n".join(lineas))
-
-
-@st.dialog("Editar mi semana", width="large")
-def _editar() -> None:
-    st.caption("Cambia lo que no te acomode. Para agregar, usa la fila vacía del final. "
-               "Para borrar, marca la fila a la izquierda y toca el basurero 🗑️.")
-    tabla = st.data_editor(
-        cargar(),
-        num_rows="dynamic",
-        hide_index=True,
-        column_order=["dia", "hora", "actividad", "detalle"],
-        column_config={
-            "dia": st.column_config.SelectboxColumn("Día", options=DIAS, required=True),
-            "hora": st.column_config.TextColumn("Hora", help="Ej.: 10:00. Puedes dejarla vacía.", max_chars=5),
-            "actividad": st.column_config.SelectboxColumn("Qué hago", options=list(ACTIVIDADES), required=True),
-            "detalle": st.column_config.TextColumn("Detalle", help="Opcional. Ej.: guateros de lavanda"),
-        },
-        key="editor_semana",
-    )
-    col_guardar, col_propuesta = st.columns(2)
-    if col_guardar.button("Guardar mi semana", icon=":material/check:", type="primary", width="stretch"):
-        guardar(tabla)
-        st.rerun()
-    if col_propuesta.button("Volver a la propuesta inicial", icon=":material/restart_alt:", width="stretch"):
-        guardar(PROPUESTA)
-        st.rerun()
-
-
-def mostrar_en_barra(dia_semana: int) -> None:
-    """Hoy con detalle y el resto de la semana en una línea por día, más el botón para editarla."""
-    filas = cargar()
-    hoy = DIAS[dia_semana]
-    st.subheader("🗓️ Mi semana")
-
-    with st.container(border=True):
-        st.markdown(f"**Hoy, {hoy.lower()}**")
-        de_hoy = del_dia(filas, hoy)
-        for fila in de_hoy:
-            detalle = f"  \n<small>{escape(fila['detalle'])}</small>" if fila["detalle"] else ""
-            st.markdown(_corta(fila) + detalle, unsafe_allow_html=True)
-        if not de_hoy:
-            st.caption("Nada anotado para hoy.")
-
-    # El resto de la semana a partir de mañana, una línea por día.
-    siguientes = DIAS[dia_semana + 1:] + DIAS[:dia_semana]
-    lineas = []
-    for dia in siguientes:
-        iconos = " · ".join(f"{ACTIVIDADES.get(f['actividad'], '•')} {f['hora']}".strip() for f in del_dia(filas, dia))
-        lineas.append(f"**{dia[:3]}** {iconos or '—'}")
-    st.markdown("  \n".join(lineas))
-    st.caption(" · ".join(f"{icono} {nombre.lower()}" for nombre, icono in ACTIVIDADES.items()))
-
-    if st.button("Editar mi semana", icon="✏️", width="stretch"):
-        _editar()

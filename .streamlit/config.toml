@@ -1,0 +1,8 @@
+# Colores cálidos inspirados en Terapias Dalmeet: salvia, crema y tierra.
+[theme]
+base = "light"
+primaryColor = "#6B8F71"            # verde salvia: botones y selección
+backgroundColor = "#FBF7F1"         # crema
+secondaryBackgroundColor = "#F1E7DA" # arena: barra lateral y cajas
+textColor = "#3F3A34"               # café oscuro, más suave que el negro
+headingFont = "serif"

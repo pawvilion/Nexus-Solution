@@ -1,12 +1,15 @@
 """Resumen de resultados que vuelve a la IA: así el siguiente plan aprende de lo que funcionó.
 
-Responsable: Persona 3. Idea original: el "Reporte para Nexus" de Benjamín (Marketing Executor),
-que aquí se hace solo: la IA lo recibe al armar el plan de marketing y "Tu día con Bárbara.IA".
+Responsable: Persona 3. Junta los números de Instagram (Tu alcance), las visitas a la tarjeta
+y el embudo de la campaña activa del Marketing Executor de Benjamín (dalmeet_executor).
 """
 
 from collections import defaultdict
 
-from . import actividad, embudo, estadisticas
+from dalmeet_executor.db import get_active_campaign
+from dalmeet_executor.reporting import build_campaign_summary
+
+from . import actividad, estadisticas
 
 
 def _alcance_por_formato(publicaciones: list[dict]) -> dict[str, float]:
@@ -19,7 +22,7 @@ def _alcance_por_formato(publicaciones: list[dict]) -> dict[str, float]:
 
 def lineas() -> list[str]:
     """Los hallazgos principales, en frases cortas. Vacío si todavía no hay datos."""
-    publicaciones, registros = estadisticas.cargar(), embudo.cargar()
+    publicaciones = estadisticas.cargar()
     visitas = actividad.cargar().get("visitas", {})
     salida = []
     if publicaciones:
@@ -28,15 +31,12 @@ def lineas() -> list[str]:
         formatos = _alcance_por_formato(publicaciones)
         if len(formatos) >= 2:
             salida.append("Alcance promedio por formato: " + ", ".join(f"{f} {v:.0f}" for f, v in formatos.items()) + ".")
-    if registros:
-        conv = embudo.conversion(registros)
-        salida.append(
-            f"Embudo: {embudo.total(registros, 'consulta')} consultas, {embudo.total(registros, 'agendo')} agendaron o compraron, "
-            f"{embudo.total(registros, 'volvio')} volvieron" + (f" (conversión {conv:.0f} %)." if conv is not None else ".")
-        )
-        mejor_origen = embudo.por_origen(registros)[0]
-        if mejor_origen["agendo"]:
-            salida.append(f"Origen que más clientas trae: {mejor_origen['origen']} ({mejor_origen['agendo']} agendaron o compraron).")
+    campana = get_active_campaign()
+    if campana:
+        r = build_campaign_summary(campana.id)["results"]
+        if r["consultations"] or r["patients"]:
+            salida.append(f"Campaña \"{campana.name}\": {r['consultations']} consultas, {r['patients']} nuevas clientas "
+                          f"(conversión {r['conversion_consultation_to_patient_pct']:.0f} %).")
     if visitas:
         origen, n = max(visitas.items(), key=lambda x: x[1])
         salida.append(f"Visitas a su tarjeta digital: {sum(visitas.values())}, la mayoría desde {origen} ({n}).")
@@ -50,9 +50,3 @@ def como_texto() -> str:
         return ""
     return ("## Sus resultados hasta ahora (úsalos para decidir qué repetir y qué cambiar)\n"
             + "\n".join(f"- {h}" for h in hallazgos))
-
-
-def reporte(hoy: str) -> str:
-    """Reporte en texto para descargar: sirve como evidencia y para compartir con el equipo."""
-    hallazgos = lineas() or ["Todavía no hay resultados registrados."]
-    return "\n".join([f"REPORTE DE RESULTADOS · Terapias Dalmeet · {hoy}", ""] + [f"- {h}" for h in hallazgos])

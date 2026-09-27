@@ -211,3 +211,58 @@ def preparar_publicacion(
         "descripcion": str(datos.get("descripcion", "")).strip(),
         "consejo": str(datos.get("consejo", "")).strip(),
     }
+
+
+def planificar_campana(
+    contexto: str, hoy: str, inicio: str, fin: str, contrato: str,
+    api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None,
+) -> dict:
+    """Bárbara.IA crea el plan de la campaña en el formato del Marketing Executor (se valida allá)."""
+    respuesta = _completar(
+        api_key,
+        base_url,
+        modelo,
+        temperature=0.7,
+        response_format={"type": "json_object"},
+        messages=[{"role": "user", "content": prompts.PLAN_CAMPANA.format(
+            contrato=contrato, hoy=hoy, inicio=inicio, fin=fin, esencia=prompts.ESENCIA, contexto=contexto)}],
+    )
+    return _leer_json(respuesta.choices[0].message.content)
+
+
+def ajustar_accion(
+    tipo: str, canal: str, titulo: str, contenido: str, nota: str,
+    api_key: str, modelo: str = MODELO_POR_DEFECTO, base_url: str | None = None,
+) -> dict:
+    """Reescribe una acción según la nota de Bárbara: {"title", "content"}."""
+    respuesta = _completar(
+        api_key,
+        base_url,
+        modelo,
+        temperature=0.6,
+        response_format={"type": "json_object"},
+        messages=[{"role": "user", "content": prompts.AJUSTAR_ACCION.format(
+            tipo=tipo, canal=canal, titulo=titulo, contenido=contenido, nota=nota)}],
+    )
+    datos = _leer_json(respuesta.choices[0].message.content)
+    return {"title": str(datos.get("title") or titulo).strip(), "content": str(datos.get("content") or contenido).strip()}
+
+
+# Sinónimos que a veces usa la IA -> valores exactos del formato del Executor.
+_SINONIMOS = {
+    "action_type": {"post": "social_post", "publicacion": "social_post", "publicación": "social_post", "carrusel": "social_post",
+                    "carousel": "social_post", "foto": "social_post", "historia": "story", "historias": "story", "stories": "story",
+                    "seguimiento": "follow_up", "mensaje": "follow_up", "whatsapp": "follow_up", "analisis": "analysis",
+                    "análisis": "analysis", "correo": "email", "anuncio": "ad_campaign", "ads": "ad_campaign"},
+    "channel": {"ig": "instagram", "wsp": "whatsapp", "interno": "internal", "correo": "email", "fb": "facebook"},
+    "priority": {"high": "alta", "medium": "media", "low": "baja"},
+}
+
+
+def normalizar_plan(plan: dict) -> dict:
+    """Corrige sinónimos y mayúsculas antes de que el Executor valide el plan."""
+    for accion in plan.get("actions", []):
+        for campo, sinonimos in _SINONIMOS.items():
+            valor = str(accion.get(campo, "")).strip().lower()
+            accion[campo] = sinonimos.get(valor, valor)
+    return plan

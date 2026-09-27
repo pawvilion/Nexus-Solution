@@ -26,7 +26,7 @@ class Alerta:
 REGLAS = [
     (ROJO, r"\bcur(?:ar|ará|an|as|a|o|aci[oó]n|ativ[oa]s?)\b",
      'Suena a promesa de cura. Prueba con "te ayuda a relajarte" o "acompaña tu bienestar".'),
-    (ROJO, r"\bsan(?:ar|ará|aci[oó]n|adora?)\b",
+    (ROJO, r"\bsan(?:ar|ará|an|aci[oó]n|adora?)\b",
      'Suena a promesa de sanación. Prueba con "un espacio para tu bienestar".'),
     (ROJO, r"diagn[oó]stic\w*",
      'No uses "diagnóstico". Di "conversación inicial" o "escucha".'),

@@ -16,6 +16,15 @@ Hecho con **Streamlit** y la **API de OpenAI (ChatGPT)** para la Hackatón FAE U
 
 Todos los módulos comparten una **memoria**: lo que Bárbara cuenta se guarda y hace que Nexus se parezca cada vez más a ella.
 
+Además de la conversación, la app tiene dos páginas más (menú de arriba):
+
+| Página | Qué hace |
+|--------|----------|
+| 📣 Kit de difusión | **Tarjeta digital** de Terapias Dalmeet (link para la bio de Instagram) y **afiches con QR** para ferias, juntas de vecinos o el CESFAM. Cada QR dice de dónde llegó la persona |
+| 📈 Tu alcance | Los números de sus publicaciones (sacados de las capturas que sube), un gráfico y qué formato le funciona mejor |
+
+La tarjeta pública se abre con `?p=tarjeta` (ej. https://nexus-dalmeet.streamlit.app/?p=tarjeta) y no muestra nada de Nexus.
+
 Al abrir la app, **"Tu día con Nexus"** la saluda con lo que sabe de ella y le propone 3 acciones para hoy: Nexus toma la iniciativa en vez de esperar a que le escriban.
 
 ## Equipo y reparto
@@ -31,7 +40,15 @@ Al abrir la app, **"Tu día con Nexus"** la saluda con lo que sabe de ella y le 
 ## Estructura
 
 ```
-app.py               ← interfaz: conversación con Nexus y selector de módulo
+app.py               ← decide qué página mostrar (menú de arriba o tarjeta pública)
+vistas/nexus.py      ← conversación con Nexus, "Tu día con Nexus" y la memoria
+vistas/kit.py        ← Kit de difusión: tarjeta digital y afiches con QR
+vistas/alcance.py    ← Tu alcance: números y gráfico de sus publicaciones
+vistas/tarjeta.py    ← tarjeta digital pública (lo que ven las clientas)
+nexus/config.py      ← claves y datos de contacto, leídos de los Secrets
+nexus/difusion.py    ← contenido de la tarjeta, links de WhatsApp y dibujo del afiche
+nexus/estadisticas.py← números de las publicaciones (data/estadisticas.json)
+nexus/fuentes/       ← fuentes Lora y Nunito para el afiche (licencia OFL)
 nexus/esencia.md     ← quién es Bárbara, qué cree y qué sueña (la IA lo lee siempre)
 nexus/prompts.py     ← personalidad de Nexus, límites y los 3 módulos
 nexus/ia.py          ← conexión con ChatGPT
@@ -53,7 +70,7 @@ streamlit run app.py
 
 **Sin API key la app funciona en modo demo**, con respuestas de ejemplo. Para usar la IA real, copia `.streamlit/secrets.toml.example` como `.streamlit/secrets.toml` y pon la clave. Ese archivo **nunca se sube a GitHub** (ya está en `.gitignore`).
 
-Usamos **Gemini de Google**, que tiene plan gratis (clave en https://aistudio.google.com), con el modelo `gemini-flash-lite-latest`, que es rápido. La app también acepta una clave de OpenAI si algún día se paga. Ojo: en el plan gratis Google puede usar lo que se le envía para mejorar sus productos, así que no conviene escribir datos privados.
+Usamos **Gemini de Google**, que tiene plan gratis (clave en https://aistudio.google.com), con el modelo `gemini-3.5-flash-lite` (rápido) y `gemini-3.1-flash-lite` de respaldo si el primero se satura. El plan gratis permite 15 consultas por minuto y 500 por día por modelo; cada mensaje usa 2 (respuesta + memoria). La app también acepta una clave de OpenAI si algún día se paga. Ojo: en el plan gratis Google puede usar lo que se le envía para mejorar sus productos, así que no conviene escribir datos privados.
 
 ## Publicar en Streamlit Cloud
 

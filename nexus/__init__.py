@@ -1,1 +1,1 @@
-"""Lógica de Nexus: modelos de datos, planificador demo e integración con la IA."""
+"""Lógica de Nexus: esencia de Bárbara, prompts, conexión con la IA y modo demo."""

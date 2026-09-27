@@ -170,3 +170,35 @@ Responde SOLO con JSON, usando las claves de los temas. Ej.: {{"suenos": "texto 
 
 Textos actuales por tema:
 {memoria}"""
+
+
+EXTRAER_METRICAS = """Lees capturas de pantalla de estadísticas de Instagram de Bárbara (Terapias Dalmeet).
+Devuelve una fila por cada publicación que aparezca, con los números tal como se ven.
+
+Responde SOLO con JSON:
+{"publicaciones": [{"publicacion": "nombre corto o de qué trata", "fecha": "como aparece, o vacío",
+  "formato": "Reel | Carrusel | Foto | Historia | Otro", "alcance": 0, "me_gusta": 0, "comentarios": 0,
+  "guardados": 0, "compartidos": 0, "visitas_perfil": 0, "seguidores_nuevos": 0}]}
+
+Reglas:
+- Los números van como enteros sin puntos (1.240 -> 1240; 1,2 mil -> 1200).
+- "alcance" son las "Cuentas alcanzadas". Si no aparece, usa las "Impresiones" o "Visualizaciones".
+- Si un dato no se ve, pon null. Nunca inventes números.
+- Si no hay estadísticas en las imágenes, devuelve {"publicaciones": []}."""
+
+
+SUGERIR_AFICHE = """Eres Nexus, la compañera de Bárbara (Terapias Dalmeet). Propón el texto de un afiche impreso
+con código QR que Bárbara pondrá en: {origen}.
+
+- "titulo": máximo 5 palabras, cálido e invitador (ej.: "Regálate una pausa").
+- "subtitulo": máximo 10 palabras, que conecte con ese lugar y su gente.
+- "detalle": 3 líneas cortas separadas por salto de línea (\n): qué ofrece, dónde, y una invitación.
+- Sin emojis, sin precios y sin promesas de curar nada: habla de bienestar, pausa y autocuidado.
+
+Responde SOLO con JSON: {{"titulo": "...", "subtitulo": "...", "detalle": "..."}}
+
+Lo que sabes de Bárbara:
+{esencia}
+
+Tu memoria:
+{memoria}"""

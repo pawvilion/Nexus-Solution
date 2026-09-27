@@ -1,9 +1,10 @@
 # Instrucciones para asistentes de código (Codex, Claude Code…)
 
-Proyecto de hackatón: **Nexus**, una app Streamlit que ayuda a Bárbara (Terapias Dalmeet) a ganar alcance: convierte su inspiración en guiones, experiencias y propuestas de difusión con la API de OpenAI.
+Proyecto de hackatón: **Bárbara.IA**, una app Streamlit que ayuda a Bárbara (Terapias Dalmeet) a ganar alcance: convierte su inspiración en guiones, experiencias y propuestas de difusión con la API de OpenAI.
 
 **Lee primero [docs/CONTEXTO.md](docs/CONTEXTO.md)** (quién es la clienta, qué construimos, nuestro diferenciador y las reglas que no se pueden romper) y [docs/ENTREGA.md](docs/ENTREGA.md) (qué evalúa el jurado).
 
+- La plataforma se llama **Bárbara.IA** en todo lo que ve la usuaria o el jurado. "Nexus" es solo el nombre del equipo, del repositorio y de las carpetas de código (`nexus/`, `vistas/nexus.py`), que no se renombran.
 - Responde y comenta el código en **español**.
 - Nunca hagas commits en `main`: trabaja en la rama del compañero (ej. `pablo-...`) y los cambios entran por Pull Request.
 - Respeta el reparto de archivos del README. Si tienes que tocar un archivo de otro rol, díselo al usuario.

@@ -5,7 +5,7 @@ Sirven para desarrollar sin créditos y para que el jurado vea el tipo de result
 si la app se abre sin clave. Deben respetar las mismas reglas que la IA (sin promesas de salud).
 """
 
-AVISO = "\n\n---\n*Modo demo: esta es una respuesta de ejemplo. Con la API key activa, Nexus responde a lo que escribes.*"
+AVISO = "\n\n---\n*Modo demo: esta es una respuesta de ejemplo. Con la API key activa, Bárbara.IA responde a lo que escribes.*"
 
 RESPUESTAS = {
     "conversemos": """Qué lindo leerte. Se nota que lo que haces no es solo un trabajo para ti: es una forma de cuidar a la gente, y eso se transmite.

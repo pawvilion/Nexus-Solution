@@ -1,7 +1,7 @@
-"""Inicio proactivo: "Tu día con Nexus".
+"""Inicio proactivo: "Tu día con Bárbara.IA".
 
 Responsable: Persona 1 (Interfaz).
-Al abrir la app, Nexus saluda a Bárbara con lo que sabe de ella y le propone 3 acciones para hoy.
+Al abrir la app, Bárbara.IA saluda a Bárbara con lo que sabe de ella y le propone 3 acciones para hoy.
 Con API key lo escribe la IA (nexus/ia.py); sin ella, se usan las reglas de este archivo.
 """
 
@@ -27,7 +27,7 @@ def _por_fecha(memoria: dict, temas) -> list[str]:
 def contexto(memoria: dict, dias_sin_publicar: int | None, ahora: datetime) -> str:
     """Resumen de la situación de Bárbara para que la IA arme el inicio."""
     if dias_sin_publicar is None:
-        publicacion = "Todavía no ha registrado ninguna publicación en Nexus."
+        publicacion = "Todavía no ha registrado ninguna publicación en Bárbara.IA."
     elif dias_sin_publicar == 0:
         publicacion = "Publicó hoy."
     else:

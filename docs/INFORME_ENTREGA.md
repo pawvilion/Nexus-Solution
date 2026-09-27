@@ -12,7 +12,7 @@ Borrador para copiar en `USACH-Submission-Template.pdf`. Cada respuesta larga es
 | Integrantes | Pablo Cayo, Pavel Andrade, Benjamín Pérez, [COMPLETAR resto con nombre y apellido] |
 | PYME asignada | Terapias Dalmeet |
 | Contraparte consultada | Bárbara Galdames, fundadora y terapeuta holística transpersonal |
-| Nombre de la solución | Nexus: la compañera de Bárbara para ganar alcance |
+| Nombre de la solución | Bárbara.IA: la compañera de Bárbara para ganar alcance |
 | Enlace o ruta de acceso | https://nexus-dalmeet.streamlit.app · código: https://github.com/pawvilion/Nexus-Solution |
 
 ---
@@ -40,7 +40,7 @@ Fuente: entrevistas y reunión 1 con Bárbara (estimaciones de la PYME, resumida
 ### 1.4 ¿Qué quedó dentro y fuera del alcance de esta entrega?
 
 <!-- max:500 -->
-Dentro: app web Nexus con 5 módulos (Conversemos, Guion para redes, Laboratorio de experiencias, Difusión fuera de redes, Mis estadísticas), memoria por temas, inicio "Tu día con Nexus", kit de difusión con tarjeta y afiches QR, página "Tu alcance" y revisor automático de promesas de salud. Fuera: costos y precios (los trabaja otro equipo), publicación o envío automático, cuentas de usuario y memoria permanente en base de datos, que queda como próximo paso.
+Dentro: app web Bárbara.IA con 5 módulos (Conversemos, Guion para redes, Laboratorio de experiencias, Difusión fuera de redes, Mis estadísticas), memoria por temas, inicio "Tu día con Bárbara.IA", kit de difusión con tarjeta y afiches QR, página "Tu alcance" y revisor automático de promesas de salud. Fuera: costos y precios (los trabaja otro equipo), publicación o envío automático, cuentas de usuario y memoria permanente en base de datos, que queda como próximo paso.
 <!-- /max -->
 
 ### 1.5 Distribución de tareas entre IA y personas
@@ -58,7 +58,7 @@ Dentro: app web Nexus con 5 módulos (Conversemos, Guion para redes, Laboratorio
 ### 2.1 ¿Cómo funciona la solución de principio a fin?
 
 <!-- max:900 -->
-Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebook, sin cuenta ni instalación. 1) "Tu día con Nexus" la saluda con lo que sabe de ella y le propone 3 acciones con un botón cada una. 2) Elige un módulo y escribe su idea como le salga, o toca un ejemplo. 3) Nexus responde con su voz, usando su esencia (nexus/esencia.md) y su memoria. 4) Bajo cada resultado, un revisor marca promesas de cura, diagnósticos, precios o datos por completar. 5) Copia el texto, lo marca con "Me sirve" o registra "Lo publiqué". 6) En Mis estadísticas sube capturas; Tu alcance guarda los números y muestra un gráfico. 7) El Kit crea su tarjeta digital y afiches QR. IA: Gemini, plan gratis. Limitaciones: publicar y enviar es manual; sin clave de IA funciona en modo demo; la memoria se borra si Streamlit reinicia la app.
+Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebook, sin cuenta ni instalación. 1) "Tu día con Bárbara.IA" la saluda con lo que sabe de ella y le propone 3 acciones con un botón cada una. 2) Elige un módulo y escribe su idea como le salga, o toca un ejemplo. 3) Bárbara.IA responde con su voz, usando su esencia (nexus/esencia.md) y su memoria. 4) Bajo cada resultado, un revisor marca promesas de cura, diagnósticos, precios o datos por completar. 5) Copia el texto, lo marca con "Me sirve" o registra "Lo publiqué". 6) En Mis estadísticas sube capturas; Tu alcance guarda los números y muestra un gráfico. 7) El Kit crea su tarjeta digital y afiches QR. IA: Gemini, plan gratis. Limitaciones: publicar y enviar es manual; sin clave de IA funciona en modo demo; la memoria se borra si Streamlit reinicia la app.
 <!-- /max -->
 
 ---
@@ -99,7 +99,7 @@ Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebo
 ### 4.2 ¿Qué valor genera este resultado para la operación de la PYME?
 
 <!-- max:500 -->
-Comprobado en la prueba: [COMPLETAR, ej. "Bárbara tuvo un post listo en X min y 3 ideas que marcó como útiles"]. Beneficio principal: el paso de la idea a algo publicable u ofrecible deja de depender de que tenga tiempo y ánimo en el momento; Nexus lo aterriza con su voz y revisa que no haya promesas de salud. Proyección, no comprobada aún: más constancia en redes y difusión cercana, como su feria, deberían aumentar las consultas. Se medirá en 📈 Tu alcance durante 4 semanas.
+Comprobado en la prueba: [COMPLETAR, ej. "Bárbara tuvo un post listo en X min y 3 ideas que marcó como útiles"]. Beneficio principal: el paso de la idea a algo publicable u ofrecible deja de depender de que tenga tiempo y ánimo en el momento; Bárbara.IA lo aterriza con su voz y revisa que no haya promesas de salud. Proyección, no comprobada aún: más constancia en redes y difusión cercana, como su feria, deberían aumentar las consultas. Se medirá en 📈 Tu alcance durante 4 semanas.
 <!-- /max -->
 
 ---
@@ -109,7 +109,7 @@ Comprobado en la prueba: [COMPLETAR, ej. "Bárbara tuvo un post listo en X min y
 ### 5.1 ¿Cómo comprobaron la estabilidad y qué medidas tomaron para proteger datos y accesos?
 
 <!-- max:650 -->
-Estabilidad: [COMPLETAR: cerramos y reabrimos la app y repetimos las 3 tareas]. Si la IA se satura o falla, Nexus avisa y la app sigue; sin clave usa el modo demo. Accesos: la clave de Gemini está en los Secrets de Streamlit, nunca en el código ni en GitHub. Datos: la memoria no guarda datos de salud ni nombres de clientas, Bárbara puede corregirla u olvidarla y no se sube a GitHub; las capturas no se almacenan. Controles: la app no publica ni envía nada, y un revisor automático marca promesas de cura, diagnósticos, precios y datos por completar (nexus/revision.py, con pruebas). Riesgo: el plan gratis de Gemini puede usar lo enviado.
+Estabilidad: cerramos, reabrimos y repetimos las 3 tareas [CONFIRMAR]. Si la IA falla, Bárbara.IA avisa y sigue; sin clave usa el modo demo. Accesos: la clave de Gemini está en los Secrets de Streamlit, nunca en el código ni en GitHub. Datos: la memoria no guarda datos de salud ni nombres de clientas, Bárbara puede corregirla u olvidarla y no se sube a GitHub; las capturas no se almacenan. Controles: la app no publica ni envía nada, y un revisor automático marca promesas de cura, diagnósticos, precios y datos por completar (nexus/revision.py, con pruebas). Riesgo: el plan gratis de Gemini puede usar lo enviado.
 <!-- /max -->
 
 ---
@@ -121,7 +121,7 @@ Estabilidad: [COMPLETAR: cerramos y reabrimos la app y repetimos las 3 tareas]. 
 | Elemento | Qué entrega el equipo |
 |---|---|
 | Solución o prototipo | https://nexus-dalmeet.streamlit.app · código en https://github.com/pawvilion/Nexus-Solution |
-| Guía de uso | `docs/GUIA_DE_USO.md` → exportar como `Guia_de_uso_Nexus.pdf` |
+| Guía de uso | `docs/GUIA_DE_USO.md` → exportar como `Guia_de_uso_BarbaraIA.pdf` |
 | Registro de pruebas | `docs/registro_pruebas.csv` → abrir en Excel y guardar como `Registro_de_pruebas.xlsx` |
 | Capturas o video | `evidencia/`: capturas de las 3 tareas o video de 1 a 2 minutos [COMPLETAR] |
 
@@ -143,7 +143,7 @@ Estabilidad: [COMPLETAR: cerramos y reabrimos la app y repetimos las 3 tareas]. 
 ### 6.4 ¿Qué debe saber la PYME para continuar usando la solución?
 
 <!-- max:450 -->
-Se abre en https://nexus-dalmeet.streamlit.app; queda a cargo Bárbara. Antes de publicar o enviar, lee el texto completo y cambia todo lo que el revisor marque en rojo: Nexus propone, tú decides, y nunca prometas curar ni diagnosticar. No escribas datos privados de clientas. Si algo falla o quieres una mejora, escribe al equipo Nexus por WhatsApp con una captura.
+Se abre en https://nexus-dalmeet.streamlit.app; queda a cargo Bárbara. Antes de publicar o enviar, lee el texto completo y cambia todo lo que el revisor marque en rojo: Bárbara.IA propone, tú decides, y nunca prometas curar ni diagnosticar. No escribas datos privados de clientas. Si algo falla o quieres una mejora, escribe al equipo Nexus por WhatsApp con una captura.
 <!-- /max -->
 
 ---

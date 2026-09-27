@@ -1,4 +1,4 @@
-"""Memoria de Nexus: lo que Bárbara va contando, ordenado en consolidados por tema.
+"""Memoria de Bárbara.IA: lo que Bárbara va contando, ordenado en consolidados por tema.
 
 Responsable: Persona 3.
 Cada tema es un texto que la IA reescribe y enriquece con cada conversación.

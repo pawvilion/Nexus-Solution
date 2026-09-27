@@ -56,7 +56,7 @@ def responder(
     """Envía la conversación del módulo a ChatGPT y devuelve su respuesta en Markdown.
 
     historial: lista de {"role": "user" | "assistant", "content": str}, en orden.
-    memoria: lo que Nexus recuerda de Bárbara (ver nexus/memoria.py).
+    memoria: lo que Bárbara.IA recuerda de Bárbara (ver nexus/memoria.py).
     imagenes: capturas adjuntas al último mensaje, como (contenido, tipo MIME).
     """
     mensajes = [{"role": m["role"], "content": m["content"]} for m in historial]

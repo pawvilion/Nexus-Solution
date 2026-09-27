@@ -26,7 +26,7 @@ publicaciones = estadisticas.cargar()
 if not publicaciones:
     st.info(
         "Todavía no hay números. Sube capturas de las estadísticas de tus publicaciones en "
-        "**🌿 Nexus → 📊 Mis estadísticas** y aparecerán aquí solas. También puedes escribirlas en la tabla de abajo.",
+        "**🌿 Bárbara.IA → 📊 Mis estadísticas** y aparecerán aquí solas. También puedes escribirlas en la tabla de abajo.",
         icon="📊",
     )
 else:

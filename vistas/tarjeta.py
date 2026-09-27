@@ -1,7 +1,7 @@
 """Tarjeta digital pública de Terapias Dalmeet (lo que ven las futuras clientas).
 
 Responsable: Persona 3.
-Se abre con ?p=tarjeta (y ?origen=... para saber de dónde llegó la persona). No muestra nada de Nexus.
+Se abre con ?p=tarjeta (y ?origen=... para saber de dónde llegó la persona). No muestra nada de Bárbara.IA.
 """
 
 import streamlit as st

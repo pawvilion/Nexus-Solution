@@ -1,4 +1,4 @@
-"""Página principal: la conversación con Nexus, "Tu día con Nexus" y la memoria.
+"""Página principal: la conversación con Bárbara.IA, "Tu día con Bárbara.IA" y la memoria.
 
 Responsable: Persona 1 (Interfaz).
 """
@@ -145,7 +145,7 @@ def preparar_inicio() -> dict:
     return inicio.por_reglas(recuerdos, dias, ahora)
 
 
-@st.dialog("Lo que Nexus sabe de ti", width="large")
+@st.dialog("Lo que Bárbara.IA sabe de ti", width="large")
 def ver_tema(tema: str) -> None:
     """Ventana con un consolidado completo: Bárbara puede leerlo, corregirlo u olvidarlo."""
     emoji, titulo, _ = memoria.TEMAS[tema]
@@ -209,7 +209,7 @@ with st.sidebar:
         st.caption("Marca con 💚 las respuestas que te sirvan y aquí podrás descargarlas.")
 
     st.divider()
-    st.subheader("🧠 Lo que Nexus sabe de ti")
+    st.subheader("🧠 Lo que Bárbara.IA sabe de ti")
     if not recuerdos:
         st.caption("Aún nada. Cuéntame tus sueños en 💭 Conversemos o sube tus estadísticas.")
     else:
@@ -223,19 +223,19 @@ with st.sidebar:
             texto = recuerdos[tema]["texto"]
             st.caption(texto[:90] + ("…" if len(texto) > 90 else ""))
 
-st.title("🌿 Nexus")
+st.title("🌿 Bárbara.IA")
 st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")
 
 if not api_key:
-    st.info("Modo demo: sin API key, Nexus muestra respuestas de ejemplo.")
+    st.info("Modo demo: sin API key, Bárbara.IA muestra respuestas de ejemplo.")
 
-# --- Tu día con Nexus: solo al llegar, antes de empezar a conversar ---
+# --- Tu día con Bárbara.IA: solo al llegar, antes de empezar a conversar ---
 if not any(st.session_state.conversaciones.values()):
     if "inicio" not in st.session_state:
         with st.spinner("Preparando tu día..."):
             st.session_state.inicio = preparar_inicio()
     with st.container(border=True):
-        st.markdown(f"#### ☀️ Tu día con Nexus\n\n{st.session_state.inicio['saludo']}")
+        st.markdown(f"#### ☀️ Tu día con Bárbara.IA\n\n{st.session_state.inicio['saludo']}")
         st.caption("Para hoy te propongo:")
         for i, accion in enumerate(st.session_state.inicio["acciones"]):
             st.button(
@@ -262,7 +262,7 @@ historial = st.session_state.conversaciones[modo]
 acepta_imagenes = MODOS[modo].get("acepta_imagenes", False)
 
 if pendiente := st.session_state.pop("pendiente", None):
-    enviar(pendiente)  # viene de una acción de "Tu día con Nexus"
+    enviar(pendiente)  # viene de una acción de "Tu día con Bárbara.IA"
 
 with st.chat_message("assistant", avatar="🌿"):
     st.markdown(MODOS[modo]["bienvenida"])

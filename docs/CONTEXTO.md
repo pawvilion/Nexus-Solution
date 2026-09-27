@@ -27,11 +27,11 @@ Lo que sí le ha funcionado es lo cercano: el boca a boca y **una feria en su vi
 
 Son 30 equipos. Muchos harán productos muy pulidos técnicamente, y hay otro equipo (de contabilidad) trabajando con Bárbara en costos y finanzas. **No competimos en eso.**
 
-Nuestra apuesta es la **cercanía con la emprendedora**: quien empieza vende poco, pero tiene un sueño, y le falta alguien que la ayude a aterrizarlo. Nexus es esa compañera: escucha la idea como Bárbara la cuente y la devuelve convertida en algo concreto, con su voz.
+Nuestra apuesta es la **cercanía con la emprendedora**: quien empieza vende poco, pero tiene un sueño, y le falta alguien que la ayude a aterrizarlo. Bárbara.IA es esa compañera: escucha la idea como Bárbara la cuente y la devuelve convertida en algo concreto, con su voz.
 
 Esto se nota en la app:
 - Es una **conversación**, no un formulario, porque a Bárbara le gusta conversar con la IA.
-- Nexus **cree en su sueño**: reconoce lo valioso de su idea y la aterriza, sin halagos vacíos.
+- Bárbara.IA **cree en su sueño**: reconoce lo valioso de su idea y la aterriza, sin halagos vacíos.
 - Todo lo que genera **suena a Bárbara**, porque parte de su esencia.
 
 ## Qué construimos
@@ -45,13 +45,13 @@ Esto se nota en la app:
 
 | 📊 **Mis estadísticas** | Capturas de pantalla de las estadísticas de Instagram | Qué funciona, qué no y 3 cosas para probar esta semana |
 
-**Memoria:** lo que Bárbara cuenta y lo que muestran sus estadísticas se guarda en 5 **consolidados por tema** (sueños y metas, creencias, historia, trabajo y clientas, redes), escritos hablándole a ella (`nexus/memoria.py`). Con cada mensaje, la IA reescribe solo los temas donde hay algo nuevo, integrándolo sin perder lo anterior. Todos los módulos los usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Nexus sabe de ti" muestra cada tema con su comienzo; al tocarlo se abre una ventana donde puede leerlo entero, corregirlo u olvidarlo (con confirmación). No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
+**Memoria:** lo que Bárbara cuenta y lo que muestran sus estadísticas se guarda en 5 **consolidados por tema** (sueños y metas, creencias, historia, trabajo y clientas, redes), escritos hablándole a ella (`nexus/memoria.py`). Con cada mensaje, la IA reescribe solo los temas donde hay algo nuevo, integrándolo sin perder lo anterior. Todos los módulos los usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Bárbara.IA sabe de ti" muestra cada tema con su comienzo; al tocarlo se abre una ventana donde puede leerlo entero, corregirlo u olvidarlo (con confirmación). No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
 
 **📣 Kit de difusión:** para que la difusión salga del chat y circule en el mundo real, donde a Bárbara ya le funciona (ferias, juntas de vecinos, boca a boca). Incluye una **tarjeta digital** (no tiene página web) con su historia, terapias, productos y botón de WhatsApp, y **afiches con QR** listos para imprimir. Cada QR abre WhatsApp con un mensaje que dice de dónde llegó la persona ("te encontré por la feria de…"), así Bárbara sabe qué lugar le trae clientas. El texto del afiche lo puede sugerir la IA según el lugar.
 
 **📈 Tu alcance:** al subir capturas de estadísticas, la IA saca los números de cada publicación (sin inventar los que no se ven) y los guarda. La página muestra el promedio, la mejor publicación, qué formato llega más lejos y un gráfico. Es el indicador de impacto medido dentro de la propia app. Los números se pueden corregir o cargar a mano.
 
-**Inicio proactivo ("Tu día con Nexus"):** al abrir la app, Nexus no espera a que Bárbara escriba. La saluda con algo concreto que sabe de ella, le dice cómo va con sus publicaciones (las registra con el botón "📣 Lo publiqué") y le propone 3 acciones para hoy, cada una con un botón que empieza la conversación en el módulo correcto. Es lo que la diferencia de un chat genérico: **toma la iniciativa, como una compañera**.
+**Inicio proactivo ("Tu día con Bárbara.IA"):** al abrir la app, Bárbara.IA no espera a que Bárbara escriba. La saluda con algo concreto que sabe de ella, le dice cómo va con sus publicaciones (las registra con el botón "📣 Lo publiqué") y le propone 3 acciones para hoy, cada una con un botón que empieza la conversación en el módulo correcto. Es lo que la diferencia de un chat genérico: **toma la iniciativa, como una compañera**.
 
 Se usan capturas porque la API de Instagram exige cuenta de empresa, una app registrada en Meta y una revisión de permisos que tarda días.
 

@@ -38,7 +38,7 @@ El aumento de alcance no se puede medir antes del domingo. Hay que separar lo **
 ## Entregables (cada uno con nombre y enlace exactos)
 
 - [ ] URL de la app en Streamlit Cloud (que funcione sin que estemos presentes)
-- [ ] `Guia_de_uso_Nexus.pdf`: cómo abrir la app, cómo usarla, qué revisión humana no se puede saltar y un error frecuente
+- [ ] `Guia_de_uso_BarbaraIA.pdf`: cómo abrir la app, cómo usarla, qué revisión humana no se puede saltar y un error frecuente
 - [ ] `Registro_de_pruebas.xlsx`: fecha, tarea, dato utilizado, resultado y evidencia
 - [ ] Video de 1 a 2 minutos, o capturas del flujo completo
 - [ ] Tabla de costos en CLP: API de OpenAI (por uso), hosting ($0 en Streamlit Community Cloud)

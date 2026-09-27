@@ -13,7 +13,7 @@ from nexus.config import config_ia, numero_whatsapp, url_app
 api_key, base_url, modelo = config_ia()
 numero = numero_whatsapp()
 
-# Textos iniciales del afiche (Bárbara los cambia o le pide a Nexus que los sugiera).
+# Textos iniciales del afiche (Bárbara los cambia o le pide a Bárbara.IA que los sugiera).
 for clave, valor in {
     "afiche_origen": "la feria de mi villa",
     "afiche_titulo": "Regálate una pausa",
@@ -67,7 +67,7 @@ st.write(
 
 st.text_input("¿Dónde lo vas a usar?", key="afiche_origen", help="Ej.: la feria de la Villa Los Aromos, el CESFAM, la junta de vecinos de…")
 if api_key:
-    st.button("Que Nexus me sugiera el texto", icon="✨", on_click=sugerir_textos)
+    st.button("Que Bárbara.IA me sugiera el texto", icon="✨", on_click=sugerir_textos)
 if aviso := st.session_state.pop("aviso_kit", None):
     st.warning(aviso)
 st.text_input("Título", key="afiche_titulo")

@@ -1,14 +1,14 @@
-# Guía de uso · Nexus
+# Guía de uso · Bárbara.IA
 
-Para Bárbara, de Terapias Dalmeet. Nexus es tu compañera para ganar alcance: le cuentas una idea como te salga y te la devuelve lista para usar, con tu voz.
+Para Bárbara, de Terapias Dalmeet. Bárbara.IA es tu compañera para ganar alcance: le cuentas una idea como te salga y te la devuelve lista para usar, con tu voz.
 
-**Regla de oro: Nexus propone y tú decides. No publica ni envía nada sola.**
+**Regla de oro: Bárbara.IA propone y tú decides. No publica ni envía nada sola.**
 
-> Exportar esta guía como `Guia_de_uso_Nexus.pdf`: ábrela en GitHub o en Word y usa Imprimir → Guardar como PDF.
+> Exportar esta guía como `Guia_de_uso_BarbaraIA.pdf`: ábrela en GitHub o en Word y usa Imprimir → Guardar como PDF.
 
 ---
 
-## 1. Abrir Nexus
+## 1. Abrir Bárbara.IA
 
 1. En el celular o el notebook, entra a **https://nexus-dalmeet.streamlit.app**
 2. Si ves "This app has gone to sleep", toca el botón para despertarla y espera unos segundos.
@@ -16,9 +16,9 @@ Para Bárbara, de Terapias Dalmeet. Nexus es tu compañera para ganar alcance: l
 
 No necesitas cuenta ni contraseña.
 
-## 2. "Tu día con Nexus"
+## 2. "Tu día con Bárbara.IA"
 
-Al entrar, Nexus te saluda y te propone **3 acciones para hoy**. Toca una y empieza sola la conversación en el módulo que corresponde.
+Al entrar, Bárbara.IA te saluda y te propone **3 acciones para hoy**. Toca una y empieza sola la conversación en el módulo que corresponde.
 
 ## 3. Los módulos (arriba: "¿En qué trabajamos hoy?")
 
@@ -50,11 +50,11 @@ Además, confirma siempre que:
 
 - **📋 Copiar texto:** abre el recuadro y toca el ícono de copiar (arriba a la derecha). Pégalo en Instagram, WhatsApp o el correo.
 - **🤍 Me sirve:** guarda la idea. En la barra lateral puedes **descargar tus ideas**.
-- **📣 Lo publiqué** (en Guion): Nexus lo anota para acompañarte con tu constancia.
+- **📣 Lo publiqué** (en Guion): Bárbara.IA lo anota para acompañarte con tu constancia.
 
-## 6. Tu memoria ("Lo que Nexus sabe de ti", barra lateral)
+## 6. Tu memoria ("Lo que Bárbara.IA sabe de ti", barra lateral)
 
-Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo o **olvídalo**. Nexus no guarda datos de salud ni nombres de clientas.
+Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo o **olvídalo**. Bárbara.IA no guarda datos de salud ni nombres de clientas.
 
 ## 7. Las otras páginas (menú de arriba)
 
@@ -71,7 +71,7 @@ Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo
 | "No pude conectarme con la IA" | Revisa tu internet y reintenta en un minuto. |
 | Aparece "Modo demo" | La app no tiene la clave de IA y muestra respuestas de ejemplo. Avisa al equipo. |
 | La revisión marca algo en rojo | Cambia esa frase por lo que sugiere el aviso antes de publicar. |
-| Nexus "olvidó" lo que le conté | La app se reinició y la memoria de esta versión se borra. Vuelve a contarlo en 💭 Conversemos. |
+| Bárbara.IA "olvidó" lo que le conté | La app se reinició y la memoria de esta versión se borra. Vuelve a contarlo en 💭 Conversemos. |
 
 ## Cuida tus datos
 

@@ -37,7 +37,7 @@ Entrega, con títulos cortos:
 2. **Guion o texto**: si es reel, escenas de 3 a 6 segundos con lo que se ve y lo que se dice; si es carrusel, el texto de cada lámina.
 3. **Texto de la publicación** (máximo 120 palabras), con una invitación amable a escribirle por WhatsApp.
 4. **Idea visual**: qué fotografiar o grabar con su celular, sin equipo especial.
-5. **Mejor día y hora para publicar**, y hasta 5 hashtags locales.
+5. **Mejor día y hora para publicar** (uno de sus días de publicar, si aparecen en "Su semana"), y hasta 5 hashtags locales.
 Primero educa o inspira, después invita. Nada de ofertas agresivas.""",
     },
     "experiencia": {

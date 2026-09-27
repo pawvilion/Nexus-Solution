@@ -58,6 +58,7 @@ nexus/inicio.py      ← "Tu día con Bárbara.IA": saludo y acciones del día (
 nexus/memoria.py     ← guarda y lee lo que Bárbara.IA recuerda (data/memoria.json, fuera de GitHub)
 nexus/actividad.py   ← registra cuándo publica (data/actividad.json, fuera de GitHub)
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
+nexus/semana.py      ← "Mi semana": calendario en la barra lateral (publicar, terapias, fabricar, insumos…), editable (data/semana.json)
 nexus/revision.py    ← revisa lo que escribe la IA: marca promesas de cura, diagnósticos, precios y datos por completar
 docs/                ← contexto del cliente, guía de la entrega, informe, guía de uso y registro de pruebas
 ```

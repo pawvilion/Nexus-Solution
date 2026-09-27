@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 
 import streamlit as st
 
-from nexus import actividad, demo, estadisticas, inicio, memoria, revision
+from nexus import actividad, demo, estadisticas, inicio, memoria, revision, semana
 from nexus.config import config_ia
 from nexus.prompts import MODOS
 
@@ -70,7 +70,8 @@ def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) 
     from nexus.ia import IASaturada, responder
 
     try:
-        return responder(modo, historial, memoria.como_texto(recuerdos), api_key, modelo, imagenes, base_url)
+        contexto = memoria.como_texto(recuerdos) + "\n\n" + semana.como_texto(mi_semana)  # así sugiere sus días de publicar
+        return responder(modo, historial, contexto, api_key, modelo, imagenes, base_url)
     except IASaturada:
         # Plan gratis de Gemini: 15 consultas por minuto por modelo. Se libera solo en un momento.
         return ("Uf, Bárbara, en este momento estoy recibiendo muchas consultas y necesito un respiro 🌿 "
@@ -139,7 +140,8 @@ def preparar_inicio() -> dict:
         from nexus.ia import generar_inicio
 
         try:
-            return generar_inicio(memoria.como_texto(recuerdos), inicio.contexto(recuerdos, dias, ahora), api_key, modelo, base_url)
+            situacion = inicio.contexto(recuerdos, dias, ahora) + f"\nSu plan de hoy: {semana.resumen_hoy(mi_semana, ahora.weekday())}."
+            return generar_inicio(memoria.como_texto(recuerdos), situacion, api_key, modelo, base_url)
         except Exception:
             pass  # si la IA falla, se usan las reglas
     return inicio.por_reglas(recuerdos, dias, ahora)
@@ -187,6 +189,7 @@ api_key, base_url, modelo = config_ia()
 ahora = datetime.now(ZoneInfo("America/Santiago"))  # hora de Chile, aunque el servidor esté en otro país
 recuerdos = memoria.cargar()
 registro = actividad.cargar()
+mi_semana = semana.cargar()
 
 # Una conversación separada por módulo, para no mezclar guiones con propuestas.
 if "conversaciones" not in st.session_state:
@@ -225,6 +228,8 @@ with st.sidebar:
 
 st.title("🌿 Bárbara.IA")
 st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")
+# En el celular la barra lateral se esconde: lo de hoy se ve también aquí arriba.
+st.caption(f"🗓️ **Hoy:** {semana.resumen_hoy(mi_semana, ahora.weekday())} · tu semana completa está en el menú lateral (» arriba a la izquierda)")
 
 if not api_key:
     st.info("Modo demo: sin API key, Bárbara.IA muestra respuestas de ejemplo.")

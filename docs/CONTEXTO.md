@@ -47,6 +47,8 @@ Esto se nota en la app:
 
 **Memoria:** de lo que Bárbara cuenta y de lo que muestran sus estadísticas, Nexus extrae lo importante y lo guarda (`nexus/memoria.py`). Todos los módulos lo usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Nexus sabe de ti" le muestra lo guardado y le permite borrar cualquier recuerdo. No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
 
+**Inicio proactivo ("Tu día con Nexus"):** al abrir la app, Nexus no espera a que Bárbara escriba. La saluda con algo concreto que sabe de ella, le dice cómo va con sus publicaciones (las registra con el botón "📣 Lo publiqué") y le propone 3 acciones para hoy, cada una con un botón que empieza la conversación en el módulo correcto. Es lo que la diferencia de un chat genérico: **toma la iniciativa, como una compañera**.
+
 Se usan capturas porque la API de Instagram exige cuenta de empresa, una app registrada en Meta y una revisión de permisos que tarda días.
 
 La app no publica ni envía nada sola: prepara todo listo y Bárbara decide. **Fuera de alcance:** costos, precios y contabilidad (los trabaja el otro equipo); publicación automática; cuentas de usuario y memoria permanente en una base de datos (quedan como próximo paso: hoy la memoria se guarda en un archivo que Streamlit Cloud borra al reiniciar la app).

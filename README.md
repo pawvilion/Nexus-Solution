@@ -16,6 +16,8 @@ Hecho con **Streamlit** y la **API de OpenAI (ChatGPT)** para la Hackatón FAE U
 
 Todos los módulos comparten una **memoria**: lo que Bárbara cuenta se guarda y hace que Nexus se parezca cada vez más a ella.
 
+Al abrir la app, **"Tu día con Nexus"** la saluda con lo que sabe de ella y le propone 3 acciones para hoy: Nexus toma la iniciativa en vez de esperar a que le escriban.
+
 ## Equipo y reparto
 
 | Persona | Rol | Archivos de los que se encarga |
@@ -33,7 +35,9 @@ app.py               ← interfaz: conversación con Nexus y selector de módulo
 nexus/esencia.md     ← quién es Bárbara, qué cree y qué sueña (la IA lo lee siempre)
 nexus/prompts.py     ← personalidad de Nexus, límites y los 3 módulos
 nexus/ia.py          ← conexión con ChatGPT
+nexus/inicio.py      ← "Tu día con Nexus": saludo y acciones del día (reglas si no hay IA)
 nexus/memoria.py     ← guarda y lee lo que Nexus recuerda (data/memoria.json, fuera de GitHub)
+nexus/actividad.py   ← registra cuándo publica (data/actividad.json, fuera de GitHub)
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
 docs/                ← contexto del cliente y guía de la entrega
 ```

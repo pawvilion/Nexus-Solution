@@ -45,6 +45,27 @@ def responder(
     return respuesta.choices[0].message.content
 
 
+def generar_inicio(memoria: str, contexto: str, api_key: str, modelo: str = MODELO_POR_DEFECTO) -> dict:
+    """Saludo personal y 3 acciones para hoy: {"saludo": str, "acciones": [{"titulo", "modo", "mensaje"}]}."""
+    cliente = OpenAI(api_key=api_key)
+    respuesta = cliente.chat.completions.create(
+        model=modelo,
+        temperature=0.9,  # que el saludo no sea igual todos los días
+        response_format={"type": "json_object"},
+        messages=[{
+            "role": "user",
+            "content": prompts.INICIO.format(
+                modos=", ".join(prompts.MODOS), esencia=prompts.ESENCIA, memoria=memoria, contexto=contexto
+            ),
+        }],
+    )
+    datos = json.loads(respuesta.choices[0].message.content)
+    acciones = [a for a in datos.get("acciones", []) if a.get("modo") in prompts.MODOS][:3]
+    if not datos.get("saludo") or not acciones:
+        raise ValueError("La IA no devolvió un inicio válido")
+    return {"saludo": datos["saludo"], "acciones": acciones}
+
+
 def extraer_recuerdos(texto: str, memoria: str, api_key: str, modelo: str = MODELO_POR_DEFECTO) -> dict:
     """Devuelve lo nuevo que vale la pena recordar: {"esencia": [...], "redes": [...]}."""
     cliente = OpenAI(api_key=api_key)

@@ -5,10 +5,12 @@ Ejecutar en local con:  streamlit run app.py
 """
 
 import re
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 
-from nexus import demo, memoria
+from nexus import actividad, demo, inicio, memoria
 from nexus.prompts import MODOS
 
 st.set_page_config(page_title="Nexus · Terapias Dalmeet", page_icon="🌿", layout="centered")
@@ -100,9 +102,30 @@ def enviar(texto: str, archivos: list | None = None) -> None:
     st.rerun()
 
 
+def preparar_inicio() -> dict:
+    """Saludo y acciones del día. Se calcula una vez por visita para no llamar a la IA en cada clic."""
+    dias = actividad.dias_sin_publicar(registro, ahora.date())
+    if api_key:
+        from nexus.ia import generar_inicio
+
+        try:
+            return generar_inicio(memoria.como_texto(recuerdos), inicio.contexto(recuerdos, dias, ahora), api_key, modelo)
+        except Exception:
+            pass  # si la IA falla, se usan las reglas
+    return inicio.por_reglas(recuerdos, dias, ahora)
+
+
+def elegir_accion(accion: dict) -> None:
+    """Al pulsar una acción del día: abre su módulo y deja listo el primer mensaje."""
+    st.session_state.modo = accion["modo"]
+    st.session_state.pendiente = accion.get("mensaje")
+
+
 api_key = obtener_secreto("OPENAI_API_KEY")
 modelo = obtener_secreto("OPENAI_MODEL") or "gpt-4o-mini"
+ahora = datetime.now(ZoneInfo("America/Santiago"))  # hora de Chile, aunque el servidor esté en otro país
 recuerdos = memoria.cargar()
+registro = actividad.cargar()
 
 # Una conversación separada por módulo, para no mezclar guiones con propuestas.
 if "conversaciones" not in st.session_state:
@@ -139,23 +162,46 @@ with st.sidebar:
                         memoria.borrar(recuerdos, i)
                         st.rerun()
 
-# --- Conversación ---
-st.title("🌿 Hola, Bárbara")
-st.caption("Cuéntame lo que sueñas para Terapias Dalmeet y lo convertimos en algo que puedas usar hoy.")
+st.title("🌿 Nexus")
+st.caption("Tu compañera para hacer crecer Terapias Dalmeet.")
 
 if not api_key:
     st.info("Modo demo: sin API key, Nexus muestra respuestas de ejemplo.")
 
+# --- Tu día con Nexus: solo al llegar, antes de empezar a conversar ---
+if not any(st.session_state.conversaciones.values()):
+    if "inicio" not in st.session_state:
+        with st.spinner("Preparando tu día..."):
+            st.session_state.inicio = preparar_inicio()
+    with st.container(border=True):
+        st.markdown(f"#### ☀️ Tu día con Nexus\n\n{st.session_state.inicio['saludo']}")
+        st.caption("Para hoy te propongo:")
+        for i, accion in enumerate(st.session_state.inicio["acciones"]):
+            st.button(
+                accion["titulo"],
+                key=f"accion-{i}",
+                icon=MODOS[accion["modo"]]["titulo"].split()[0],  # el emoji del módulo
+                on_click=elegir_accion,
+                args=(accion,),
+                width="stretch",
+            )
+
+# --- Conversación ---
+if "modo" not in st.session_state:
+    st.session_state.modo = list(MODOS)[0]
 modo = st.segmented_control(
     "¿En qué trabajamos hoy?",
     options=list(MODOS),
     format_func=lambda m: MODOS[m]["titulo"],
-    default=list(MODOS)[0],
+    key="modo",
     width="stretch",
 )
 modo = modo or list(MODOS)[0]  # si se deselecciona la opción activa
 historial = st.session_state.conversaciones[modo]
 acepta_imagenes = MODOS[modo].get("acepta_imagenes", False)
+
+if pendiente := st.session_state.pop("pendiente", None):
+    enviar(pendiente)  # viene de una acción de "Tu día con Nexus"
 
 with st.chat_message("assistant", avatar="🌿"):
     st.markdown(MODOS[modo]["bienvenida"])
@@ -179,11 +225,16 @@ for i, mensaje in enumerate(historial):
         idea = {"titulo": MODOS[modo]["titulo"], "contenido": mensaje["content"]}
         util = idea in guardadas
         etiqueta = "Guardada en tus ideas" if util else "Me sirve"
-        if st.button(etiqueta, key=f"util-{modo}-{i}", icon="💚" if util else "🤍"):
+        col_util, col_publicado = st.columns(2)
+        if col_util.button(etiqueta, key=f"util-{modo}-{i}", icon="💚" if util else "🤍"):
             if util:
                 guardadas.remove(idea)
             else:
                 guardadas.append(idea)
+            st.rerun()
+        if modo == "guion" and col_publicado.button("Lo publiqué", key=f"publicado-{i}", icon="📣"):
+            actividad.registrar_publicacion(registro, ahora.date())
+            st.session_state.aviso = "¡Bien, Bárbara! Lo anoté. Cuando tengas estadísticas, súbelas en 📊 🌿"
             st.rerun()
         with st.expander("Copiar texto", icon="📋"):
             st.caption("Usa el ícono de copiar, arriba a la derecha del recuadro.")

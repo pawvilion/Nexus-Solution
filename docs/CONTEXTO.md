@@ -38,11 +38,18 @@ Esto se nota en la app:
 
 | Módulo | Qué entra | Qué sale |
 |--------|-----------|----------|
+| 💭 **Conversemos** | Sus sueños, creencias e historias, contados libremente | Una conversación cercana; lo importante queda en la memoria |
 | ✍️ **Guion para redes** | Una idea, anécdota o creencia | Guion de reel o carrusel, texto del post, idea visual, día y hora para publicar |
 | 🌱 **Laboratorio de experiencias** | Una inspiración ("quiero que sientan el cariño del guatero") | Una experiencia o servicio concreto: nombre, pasos, formato, por qué es valiosa y post de lanzamiento |
 | 🤝 **Difusión fuera de redes** | A quién quiere llegar (junta de vecinos, feria, empresa, municipalidad, otra ciudad) | Qué ofrecer, mensaje listo para enviar y próximos pasos |
 
-La app no publica ni envía nada sola: prepara todo listo y Bárbara decide. **Fuera de alcance:** costos, precios y contabilidad (los trabaja el otro equipo); publicación automática; cuentas de usuario (quedan como próximo paso).
+| 📊 **Mis estadísticas** | Capturas de pantalla de las estadísticas de Instagram | Qué funciona, qué no y 3 cosas para probar esta semana |
+
+**Memoria:** de lo que Bárbara cuenta y de lo que muestran sus estadísticas, Nexus extrae lo importante y lo guarda (`nexus/memoria.py`). Todos los módulos lo usan, así que con el tiempo el contenido se parece cada vez más a ella. En la barra lateral, "Lo que Nexus sabe de ti" le muestra lo guardado y le permite borrar cualquier recuerdo. No se guardan datos de salud ni nombres de clientas, y las capturas no se almacenan: solo lo aprendido de ellas.
+
+Se usan capturas porque la API de Instagram exige cuenta de empresa, una app registrada en Meta y una revisión de permisos que tarda días.
+
+La app no publica ni envía nada sola: prepara todo listo y Bárbara decide. **Fuera de alcance:** costos, precios y contabilidad (los trabaja el otro equipo); publicación automática; cuentas de usuario y memoria permanente en una base de datos (quedan como próximo paso: hoy la memoria se guarda en un archivo que Streamlit Cloud borra al reiniciar la app).
 
 ## Reglas que no se pueden romper
 

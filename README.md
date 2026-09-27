@@ -8,9 +8,13 @@ Hecho con **Streamlit** y la **API de OpenAI (ChatGPT)** para la Hackatón FAE U
 
 | Módulo | Qué hace |
 |--------|----------|
+| 💭 Conversemos | Bárbara cuenta sus sueños y creencias; Nexus conversa y lo recuerda |
 | ✍️ Guion para redes | Idea o anécdota → guion de reel o carrusel, texto, idea visual y cuándo publicar |
 | 🌱 Laboratorio de experiencias | Inspiración → experiencia o servicio concreto (ej. "Crea tu guatero conmigo") |
 | 🤝 Difusión fuera de redes | A quién quiere llegar → qué ofrecer y mensaje listo para enviar |
+| 📊 Mis estadísticas | Capturas de Instagram → qué funciona, qué no y qué probar |
+
+Todos los módulos comparten una **memoria**: lo que Bárbara cuenta se guarda y hace que Nexus se parezca cada vez más a ella.
 
 ## Equipo y reparto
 
@@ -29,6 +33,7 @@ app.py               ← interfaz: conversación con Nexus y selector de módulo
 nexus/esencia.md     ← quién es Bárbara, qué cree y qué sueña (la IA lo lee siempre)
 nexus/prompts.py     ← personalidad de Nexus, límites y los 3 módulos
 nexus/ia.py          ← conexión con ChatGPT
+nexus/memoria.py     ← guarda y lee lo que Nexus recuerda (data/memoria.json, fuera de GitHub)
 nexus/demo.py        ← respuestas de ejemplo cuando no hay API key
 docs/                ← contexto del cliente y guía de la entrega
 ```

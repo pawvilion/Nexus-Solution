@@ -8,7 +8,27 @@ si la app se abre sin clave. Deben respetar las mismas reglas que la IA (sin pro
 AVISO = "\n\n---\n*Modo demo: esta es una respuesta de ejemplo. Con la API key activa, Nexus responde a lo que escribes.*"
 
 RESPUESTAS = {
-    "guion": """Qué bonito lo que cuentas: eso es justo lo que la gente necesita ver para animarse a cuidarse.
+    "conversemos": """Qué lindo leerte. Se nota que lo que haces no es solo un trabajo para ti: es una forma de cuidar a la gente, y eso se transmite.
+
+Me quedo con eso para tus próximos guiones. Cuéntame: ¿recuerdas el momento en que sentiste por primera vez que esto era lo tuyo?
+
+Si quieres, esa historia podría ser un lindo reel para que la gente te conozca: pruébala en ✍️ Guion para redes.""",
+    "estadisticas": """**Lo que veo**
+En tus capturas, las publicaciones donde apareces tú (explicando o trabajando) tienen más alcance y más guardados que las fotos solo de producto.
+
+**Lo que está funcionando**
+La gente conecta contigo. Cuando cuentas el porqué de lo que haces, se quedan y guardan la publicación para volver a verla.
+
+**Lo que no está funcionando**
+Las fotos de producto con fondo neutro y poco texto llegan a menos personas. No es que el producto no guste: es que no cuentan una historia.
+
+**Qué probar esta semana**
+1. Un reel corto mostrando tus manos haciendo un guatero, contando para qué sirve cada semilla.
+2. Publicar entre martes y jueves, de 19:00 a 21:00, y comparar.
+3. Terminar cada publicación con una pregunta para que la gente comente.
+
+*Con pocas capturas todavía no se pueden sacar conclusiones firmes: sube más a medida que publiques.*""",
+    "guion":"""Qué bonito lo que cuentas: eso es justo lo que la gente necesita ver para animarse a cuidarse.
 
 **Formato sugerido:** reel de 20 a 30 segundos. Muestra el proceso y tu cara, que es lo que genera confianza.
 

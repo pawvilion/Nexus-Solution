@@ -8,13 +8,18 @@ import re
 
 import streamlit as st
 
-from nexus import demo
+from nexus import demo, memoria
 from nexus.prompts import MODOS
 
 st.set_page_config(page_title="Nexus · Terapias Dalmeet", page_icon="🌿", layout="centered")
 
 # Frases de ejemplo para que Bárbara no parta frente a una caja vacía.
 EJEMPLOS = {
+    "conversemos": [
+        "Siento que el cariño que pongo en lo que hago le llega a la otra persona",
+        "Mi sueño es hacer giras de terapia por distintas ciudades",
+        "En Brasil aprendí que el autocuidado es parte del día a día",
+    ],
     "guion": [
         "Quiero contar que cada guatero lo hago a mano y con cariño",
         "Una clienta me dijo que durmió increíble después del masaje",
@@ -49,30 +54,55 @@ def texto_para_copiar(respuesta: str) -> str:
     return texto.strip()
 
 
-def generar_respuesta(modo: str, historial: list[dict]) -> str:
+def generar_respuesta(historial: list[dict], imagenes: list[tuple[bytes, str]]) -> str:
     if not api_key:
         return demo.responder(modo)
-    from nexus.ia import MODELO_POR_DEFECTO, responder
+    from nexus.ia import responder
 
     try:
-        return responder(modo, historial, api_key, obtener_secreto("OPENAI_MODEL") or MODELO_POR_DEFECTO)
+        return responder(modo, historial, memoria.como_texto(recuerdos), api_key, modelo, imagenes)
     except Exception as error:
         st.warning(f"No pude conectarme con la IA ({error}). Te muestro un ejemplo.")
         return demo.responder(modo)
 
 
-def enviar(texto: str) -> None:
-    historial.append({"role": "user", "content": texto})
+def recordar(texto: str, respuesta: str) -> int:
+    """Guarda en la memoria lo nuevo que vale la pena recordar. Devuelve cuántos recuerdos se agregaron."""
+    if not api_key:
+        # Modo demo: sin IA no se puede resumir, así que solo se guarda lo contado en "Conversemos".
+        return memoria.agregar(recuerdos, [texto], "esencia") if modo == "conversemos" else 0
+    from nexus.ia import extraer_recuerdos
+
+    material = f"Bárbara dijo: {texto}"
+    if modo == "estadisticas":
+        material += f"\n\nAnálisis de sus estadísticas:\n{respuesta}"
+    try:
+        nuevos = extraer_recuerdos(material, memoria.como_texto(recuerdos), api_key, modelo)
+    except Exception:
+        return 0  # si falla la memoria, la conversación sigue igual
+    return sum(memoria.agregar(recuerdos, textos, tipo) for tipo, textos in nuevos.items())
+
+
+def enviar(texto: str, archivos: list | None = None) -> None:
+    imagenes = [(archivo.getvalue(), archivo.type) for archivo in archivos or []]
+    if imagenes and not texto:
+        texto = "Te comparto mis estadísticas."
+    historial.append({"role": "user", "content": texto, "imagenes": [datos for datos, _ in imagenes]})
     with st.chat_message("user"):
         st.markdown(texto)
     with st.chat_message("assistant", avatar="🌿"):
         with st.spinner("Aterrizando tu idea..."):
-            respuesta = generar_respuesta(modo, historial)
+            respuesta = generar_respuesta(historial, imagenes)
+            agregados = recordar(texto, respuesta)
     historial.append({"role": "assistant", "content": respuesta})
+    if agregados:
+        st.session_state.aviso = f"Guardé {agregados} {'cosa nueva' if agregados == 1 else 'cosas nuevas'} sobre ti 💭"
     st.rerun()
 
 
 api_key = obtener_secreto("OPENAI_API_KEY")
+modelo = obtener_secreto("OPENAI_MODEL") or "gpt-4o-mini"
+recuerdos = memoria.cargar()
 
 # Una conversación separada por módulo, para no mezclar guiones con propuestas.
 if "conversaciones" not in st.session_state:
@@ -82,7 +112,10 @@ if "guardadas" not in st.session_state:
     st.session_state.guardadas = []
 guardadas = st.session_state.guardadas
 
-# --- Barra lateral: ideas que le sirvieron ---
+if aviso := st.session_state.pop("aviso", None):
+    st.toast(aviso, icon="🌿")
+
+# --- Barra lateral: ideas que le sirvieron y memoria ---
 with st.sidebar:
     st.metric("💚 Ideas que te sirvieron", len(guardadas))
     if guardadas:
@@ -90,6 +123,21 @@ with st.sidebar:
         st.download_button("Descargar mis ideas", archivo, file_name="ideas_nexus.txt", icon="⬇️")
     else:
         st.caption("Marca con 💚 las respuestas que te sirvan y aquí podrás descargarlas.")
+
+    st.divider()
+    st.subheader("🧠 Lo que Nexus sabe de ti")
+    if not recuerdos:
+        st.caption("Aún nada. Cuéntame tus sueños en 💭 Conversemos o sube tus estadísticas.")
+    for tipo, titulo in memoria.TIPOS.items():
+        del_tipo = [(i, r) for i, r in enumerate(recuerdos) if r["tipo"] == tipo]
+        if del_tipo:
+            with st.expander(f"{titulo} ({len(del_tipo)})"):
+                for i, recuerdo in del_tipo:
+                    col_texto, col_borrar = st.columns([6, 1], vertical_alignment="center")
+                    col_texto.markdown(recuerdo["texto"])
+                    if col_borrar.button("🗑️", key=f"borrar-{i}", help="Olvidar esto"):
+                        memoria.borrar(recuerdos, i)
+                        st.rerun()
 
 # --- Conversación ---
 st.title("🌿 Hola, Bárbara")
@@ -102,16 +150,17 @@ modo = st.segmented_control(
     "¿En qué trabajamos hoy?",
     options=list(MODOS),
     format_func=lambda m: MODOS[m]["titulo"],
-    default="guion",
+    default=list(MODOS)[0],
     width="stretch",
 )
-modo = modo or "guion"  # si se deselecciona la opción activa
+modo = modo or list(MODOS)[0]  # si se deselecciona la opción activa
 historial = st.session_state.conversaciones[modo]
+acepta_imagenes = MODOS[modo].get("acepta_imagenes", False)
 
 with st.chat_message("assistant", avatar="🌿"):
     st.markdown(MODOS[modo]["bienvenida"])
 
-if not historial:
+if not historial and EJEMPLOS.get(modo):
     st.caption("¿No sabes por dónde empezar? Prueba con una de estas:")
     for i, ejemplo in enumerate(EJEMPLOS[modo]):
         if st.button(ejemplo, key=f"ejemplo-{modo}-{i}", icon="💬"):
@@ -121,6 +170,8 @@ for i, mensaje in enumerate(historial):
     if mensaje["role"] == "user":
         with st.chat_message("user"):
             st.markdown(mensaje["content"])
+            if mensaje.get("imagenes"):
+                st.image(mensaje["imagenes"], width=160)
         continue
 
     with st.chat_message("assistant", avatar="🌿"):
@@ -142,5 +193,13 @@ if historial and st.button("Empezar de nuevo", icon="🔄"):
     historial.clear()
     st.rerun()
 
-if texto := st.chat_input(MODOS[modo]["placeholder"]):
-    enviar(texto)
+entrada = st.chat_input(
+    MODOS[modo]["placeholder"],
+    accept_file="multiple" if acepta_imagenes else False,
+    file_type=["png", "jpg", "jpeg", "webp"] if acepta_imagenes else None,
+)
+if entrada:
+    if acepta_imagenes:
+        enviar(entrada.text, entrada.files)
+    else:
+        enviar(entrada)

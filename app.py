@@ -244,11 +244,14 @@ if historial and st.button("Empezar de nuevo", icon="🔄"):
     historial.clear()
     st.rerun()
 
-entrada = st.chat_input(
-    MODOS[modo]["placeholder"],
-    accept_file="multiple" if acepta_imagenes else False,
-    file_type=["png", "jpg", "jpeg", "webp"] if acepta_imagenes else None,
-)
+# El cuadro va dentro de un contenedor (justo después de la conversación) y no fijo al pie:
+# fijo, Streamlit "pega" la página al final y no deja subir bien con la rueda del mouse.
+with st.container():
+    entrada = st.chat_input(
+        MODOS[modo]["placeholder"],
+        accept_file="multiple" if acepta_imagenes else False,
+        file_type=["png", "jpg", "jpeg", "webp"] if acepta_imagenes else None,
+    )
 if entrada:
     if acepta_imagenes:
         enviar(entrada.text, entrada.files)

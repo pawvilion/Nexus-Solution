@@ -61,19 +61,23 @@ else:
     # Números con punto de miles, como se escriben en Chile (1.240 y no 1,240).
     for clave in estadisticas.METRICAS:
         datos[f"{clave}_txt"] = datos[clave].map(lambda n: "—" if pd.isna(n) else miles(n))
+    # El nombre va ENCIMA de cada barra (no a la izquierda): así en el celular la barra usa todo el ancho.
     base = alt.Chart(datos).encode(
-        y=alt.Y("etiqueta:N", sort="-x", title=None,
-                axis=alt.Axis(labelColor=TINTA, labelLimit=280, labelOverlap=False, labelFontSize=12, ticks=False, domain=False)),
-        x=alt.X("alcance:Q", title="Cuentas alcanzadas",
-                axis=alt.Axis(labelColor=TINTA_SUAVE, titleColor=TINTA_SUAVE, gridColor=GRILLA, domain=False, ticks=False,
-                              labelExpr="replace(format(datum.value, ',.0f'), ',', '.')")),
+        y=alt.Y("etiqueta:N", sort=alt.EncodingSortField("alcance", order="descending"), axis=None),
         tooltip=[alt.Tooltip("publicacion:N", title="Publicación"), alt.Tooltip("fecha:N", title="Fecha"),
                  alt.Tooltip("formato:N", title="Formato")]
                 + [alt.Tooltip(f"{clave}_txt:N", title=nombre) for clave, nombre in estadisticas.METRICAS.items()],
     )
-    barras = base.mark_bar(color=BARRA, cornerRadiusEnd=4, size=20)
-    etiquetas = base.mark_text(align="left", dx=6, color=TINTA, fontSize=12).encode(text="alcance_txt:N")
-    grafico = (barras + etiquetas).properties(height=max(52 * len(datos), 120)).configure_view(strokeWidth=0)
+    # Espacio a la derecha para que el número de la barra más larga no se corte.
+    escala = alt.Scale(domain=[0, datos["alcance"].max() * 1.2])
+    eje_x = alt.X("alcance:Q", axis=None, scale=escala)
+    datos["cero"] = 0  # los nombres parten en el borde izquierdo
+    barras = base.mark_bar(color=BARRA, cornerRadiusEnd=4, size=16, yOffset=9).encode(x=eje_x)
+    nombres = base.mark_text(align="left", baseline="bottom", dy=-3, color=TINTA, fontSize=13, limit=330).encode(
+        x=alt.X("cero:Q", axis=None, scale=escala), text="etiqueta:N")
+    valores = base.mark_text(align="left", dx=6, dy=9, color=TINTA, fontSize=12, fontWeight="bold").encode(
+        x=eje_x, text="alcance_txt:N")
+    grafico = (barras + nombres + valores).properties(height=max(60 * len(datos), 120)).configure_view(strokeWidth=0)
     st.altair_chart(grafico, width="stretch")
 
 # --- Tabla editable ---

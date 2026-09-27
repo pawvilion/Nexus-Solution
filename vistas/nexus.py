@@ -291,14 +291,15 @@ for i, mensaje in enumerate(historial):
         idea = {"titulo": MODOS[modo]["titulo"], "contenido": mensaje["content"]}
         util = idea in guardadas
         etiqueta = "Guardada en tus ideas" if util else "Me sirve"
-        col_util, col_publicado = st.columns(2)
-        if col_util.button(etiqueta, key=f"util-{modo}-{i}", icon="💚" if util else "🤍"):
+        # Fila horizontal (y no columnas): en el celular los dos botones quedan lado a lado.
+        botones = st.container(horizontal=True, gap="small")
+        if botones.button(etiqueta, key=f"util-{modo}-{i}", icon="💚" if util else "🤍"):
             if util:
                 guardadas.remove(idea)
             else:
                 guardadas.append(idea)
             st.rerun()
-        if modo == "guion" and col_publicado.button("Lo publiqué", key=f"publicado-{i}", icon="📣"):
+        if modo == "guion" and botones.button("Lo publiqué", key=f"publicado-{i}", icon="📣"):
             actividad.registrar_publicacion(registro, ahora.date())
             st.session_state.aviso = "¡Bien, Bárbara! Lo anoté. Cuando tengas estadísticas, súbelas en 📊 🌿"
             st.rerun()

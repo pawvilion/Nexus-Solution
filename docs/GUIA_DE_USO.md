@@ -4,8 +4,6 @@ Para Bárbara, de Terapias Dalmeet. Bárbara.IA es tu compañera para ganar alca
 
 **Regla de oro: Bárbara.IA propone y tú decides. No publica ni envía nada sola.**
 
-> Exportar esta guía como `Guia_de_uso_BarbaraIA.pdf`: ábrela en GitHub o en Word y usa Imprimir → Guardar como PDF.
-
 ---
 
 ## 1. Abrir Bárbara.IA
@@ -56,29 +54,33 @@ Además, confirma siempre que:
 
 Toca un tema para leerlo entero. Si algo no es cierto, **corrígelo** ahí mismo o **olvídalo**. Bárbara.IA no guarda datos de salud ni nombres de clientas.
 
-## 7. Calendario (menú de arriba)
+## 7. Calendario (menú de arriba: "Semana" en el celular)
 
 Muestra tu semana ordenada por día, de lunes a domingo, con la hora y una etiqueta de color para cada actividad: publicar, preparar contenido, terapias, fabricar productos, comprar insumos, responder mensajes, difusión y descanso. El día de hoy aparece marcado. En el celular, los días quedan uno debajo del otro.
 
 **¿Algo no te acomoda?** Más abajo, en **Editar mi semana**, cambia el día, la hora o la actividad, agrega filas al final o borra las que sobren, y toca **Guardar cambios**. Si te enredas, **Volver a la propuesta inicial**.
 
-## 8. 📸 Centro de marketing (menú de arriba)
+## 8. ⚙️ Marketing Executor (menú de arriba: "Marketing")
 
-Tú solo sacas las fotos que te pido; yo las edito y escribo la descripción.
+Tu ciclo de marketing de 2 semanas: Bárbara.IA piensa el plan, tú decides, y medimos cómo te fue.
 
-1. Toca **Armar mi plan de la semana**. Sale un post por cada día de Publicar de tu Calendario, más 2 historias.
-2. En cada publicación verás **"Lo que necesito que me mandes"**: saca esas fotos o videos con el celular.
-3. Súbelos **tal cual, sin editar**, y toca **🪄 Preparar mi publicación**.
-4. Revisa la foto editada y la descripción. Puedes cambiar el texto sobre la imagen (**Aplicar texto**) o la descripción.
-5. Toca **✅ Aprobar**. Si la revisión marca algo en rojo, no te dejará aprobar hasta que lo cambies.
-6. Descarga las fotos y **prográmala** en Meta Business Suite o en Instagram para el día y la hora del plan (los pasos están en "Cómo programarla"). Luego toca **Ya la programé**.
-
-Los videos van tal cual: recórtalos en el editor de Instagram al publicarlos.
+1. **🧠 Plan:** toca **Crear un plan nuevo con Bárbara.IA**. Mira lo que sabe de ti, tu semana y tus resultados, y arma una campaña con 5 a 8 acciones (reels, publicaciones, historias, seguimientos por WhatsApp).
+2. **✅ Aprobar:** revisa cada acción. Puedes:
+   - **Aprobar** si te gusta tal cual (si la revisión marca algo en rojo, no te dejará hasta que lo cambies).
+   - Escribir en **"¿Qué cambiarías?"** y tocar **Modificar con IA**: la reescribe y vuelve a quedar para tu revisión.
+   - **Rechazar** si no la quieres: no se hace.
+3. **Ejecutar:** las aprobadas aparecen abajo con su texto listo para copiar. Publícala o prográmala tú en Instagram o Meta Business Suite y toca **Ejecutar** para marcarla como hecha. El análisis interno se hace solo.
+4. **📅 Agenda:** todas las acciones por fecha y en qué estado van.
+5. **📊 Resultados:** anota cuántas personas te escribieron y cuántas se volvieron clientas, y de dónde llegaron. Solo cantidades: nunca nombres ni datos de salud.
+6. **🔁 Reporte:** al terminar la campaña, toca **Crear el siguiente plan con estos resultados**. Bárbara.IA ve qué funcionó y arma el próximo ciclo.
 
 ## 9. Las otras páginas (menú de arriba)
 
+En el celular, el menú aparece como una fila de botones arriba: **Inicio · Marketing · Semana · Difusión · Alcance**.
+
+
 - **📣 Kit de difusión:** tu tarjeta digital (link para la bio de Instagram) y afiches con QR para ferias o juntas de vecinos. Cada QR te dice de dónde llegó la persona.
-- **📈 Tu alcance:** los números de tus publicaciones, sacados de las capturas que subes, con un gráfico.
+- **📈 Tu alcance:** los números de tus publicaciones, sacados de las capturas que subes en 📊 Mis estadísticas, con un gráfico y qué formato te funciona mejor.
 
 ---
 
@@ -90,7 +92,7 @@ Los videos van tal cual: recórtalos en el editor de Instagram al publicarlos.
 | "No pude conectarme con la IA" | Revisa tu internet y reintenta en un minuto. |
 | Aparece "Modo demo" | La app no tiene la clave de IA y muestra respuestas de ejemplo. Avisa al equipo. |
 | La revisión marca algo en rojo | Cambia esa frase por lo que sugiere el aviso antes de publicar. |
-| Bárbara.IA "olvidó" lo que le conté | La app se reinició y la memoria de esta versión se borra. Vuelve a contarlo en 💭 Conversemos. |
+| Bárbara.IA "olvidó" lo que le conté o desapareció mi campaña | La app se reinició y en esta versión los datos se borran. Vuelve a contarlo en 💭 Conversemos o crea un plan nuevo. |
 
 ## Cuida tus datos
 

@@ -47,9 +47,9 @@ Dentro: Bárbara.IA con 5 módulos de conversación y memoria editable; Marketin
 
 | Tarea (máx. 120) | Cuadrante AX y motivo (máx. 180) | Qué realiza la IA (máx. 180) | Quién revisa y cuándo (máx. 180) |
 |---|---|---|---|
-| Convertir una idea o anécdota de Bárbara en un post para Instagram | Creative catalyst: la IA propone y Bárbara elige. Un borrador con error cuesta poco y se corrige antes de publicar. | Con su esencia y memoria entrega formato, guion, texto, idea visual, día y hora sugeridos y hashtags, sin nombrar condiciones de salud. | Bárbara lee y ajusta antes de publicar. El revisor automático marca en rojo promesas de salud y datos por completar. Solo ella publica. |
+| Convertir una idea o anécdota de Bárbara en un post para Instagram | Creative catalyst: la IA propone y Bárbara elige. Un borrador con error cuesta poco y se corrige antes de publicar. | Con su esencia y memoria entrega formato, guion, texto, idea visual, día y hora sugeridos y hashtags, sin nombrar condiciones de salud. | Bárbara lee y ajusta antes de publicar. Se detiene si el revisor marca en rojo una promesa de salud: no se puede aprobar hasta cambiarla. Solo ella publica. |
 | Planificar una campaña de 2 semanas y decidir qué se publica (Marketing Executor) | Human first: lo que sale hacia afuera lleva su nombre. La IA planifica, pero cada acción externa requiere la aprobación de Bárbara. | Analiza su memoria, semana y resultados; crea 5 a 8 acciones con fecha y texto listo, y reescribe una acción según la nota de Bárbara. | Bárbara aprueba, pide cambios o rechaza cada acción antes de ejecutarla. El revisor bloquea la aprobación si hay frases prohibidas. |
-| Leer sus estadísticas de Instagram y decir qué funciona | No regrets: son sus propios números y leerlos bien tiene bajo riesgo. Si la IA lee mal una cifra, se corrige en la tabla. | Lee las cifras de sus capturas sin inventar las que no se ven, las guarda y explica qué funciona, qué no y qué probar. | Bárbara revisa y corrige los números en 📈 Tu alcance. Ella decide qué recomendación aplicar en su próximo post. |
+| Leer sus estadísticas de Instagram y decir qué funciona | No regrets: son sus propios números y leerlos bien tiene bajo riesgo. Si la IA lee mal una cifra, se corrige en la tabla. | Lee las cifras de sus capturas sin inventar las que no se ven, las guarda y explica qué funciona, qué no y qué probar. | Bárbara revisa y corrige los números en Tu alcance. Se detiene si una cifra no se ve: la IA la deja vacía en vez de inventarla. Ella decide qué recomendación aplicar. |
 
 ---
 
@@ -98,7 +98,7 @@ Acceso: Bárbara abre https://nexus-dalmeet.streamlit.app en su celular o notebo
 ### 4.2 ¿Qué valor genera este resultado para la operación de la PYME?
 
 <!-- max:500 -->
-Comprobado en la sesión: Bárbara pasó de tardar entre 3 horas y 2 días en tener un post a tener un guion listo en 8 minutos, y de publicar 1 vez por semana sin plan a tener 7 acciones planificadas para 2 semanas. Beneficio principal: publicar con constancia deja de depender del tiempo y el ánimo del momento. Proyección, aún no comprobada: más constancia y difusión cercana deberían subir su alcance (hoy 88 cuentas por reel) y sus consultas (3 por semana). Se medirá al cierre de la campaña.
+Comprobado en la sesión: pasó de tardar entre 3 horas y 2 días en tener un post a tener un guion listo en 8 minutos, y de publicar 1 vez por semana sin plan a 7 acciones planificadas para 2 semanas. Valor: si prepara 3 posts por semana, libera al menos 9 horas semanales para atender y fabricar (estimación), y publicar con constancia deja de depender del ánimo del momento. Proyección no comprobada: más alcance (hoy 88 cuentas por reel) y consultas (3 por semana), a medir al cierre de la campaña.
 <!-- /max -->
 
 ---
@@ -108,7 +108,7 @@ Comprobado en la sesión: Bárbara pasó de tardar entre 3 horas y 2 días en te
 ### 5.1 ¿Cómo comprobaron la estabilidad y qué medidas tomaron para proteger datos y accesos?
 
 <!-- max:650 -->
-Estabilidad: Bárbara usó la app pública en su celular sin errores; probamos reabrir la página (la memoria se mantiene), el ciclo completo del Marketing Executor y la saturación de la IA (pasa a un modelo de respaldo y avisa). Accesos: la clave de Gemini está en los Secrets de Streamlit, nunca en el código. Datos: no se guardan datos de salud ni nombres de clientas; Bárbara puede corregir u olvidar su memoria. Controles: nada se publica solo y un revisor bloquea promesas de salud; en la sesión detectó 2 palabras. Riesgos: el plan gratis de Gemini puede usar lo enviado, y los datos se borran si la app se reinicia.
+Estabilidad: Bárbara usó la app pública en su celular sin errores; probamos reabrir (la memoria se mantiene), el ciclo del Marketing Executor y la saturación de la IA (usa un modelo de respaldo y avisa). Accesos: la clave de Gemini está en los Secrets de Streamlit, no en el código. Datos: no se guardan datos de salud ni nombres de clientas y Bárbara corrige u olvida su memoria; un revisor bloquea promesas de salud (detectó 2 en la sesión). Riesgos pendientes: sin inicio de sesión, quien tenga el link ve su memoria y campañas; Gemini gratis puede usar lo enviado; los datos se borran al reiniciar. Mitigación: login y base de datos al 27/10.
 <!-- /max -->
 
 ---

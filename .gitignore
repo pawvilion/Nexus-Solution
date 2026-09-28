@@ -30,3 +30,6 @@ venv/
 
 # Memoria de Bárbara.IA (lo que cuenta Bárbara): no se sube a GitHub
 data/
+
+# Archivos temporales de Word/Excel mientras un documento está abierto
+~$*
